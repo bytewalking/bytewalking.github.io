@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Basic on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/basic/</link>
+    <description>Recent content in Basic on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 31 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/basic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RestFul API 知识总结</title>
+      <link>https://bytewalking.github.io/post/2019-07-31-restful-api-essential-knowledge/</link>
+      <pubDate>Wed, 31 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-07-31-restful-api-essential-knowledge/</guid>
+      <description>&lt;h1 id=&#34;重要概念&#34;&gt;重要概念&lt;/h1&gt;&#xA;&lt;p&gt;REST,即Representational State Transfer的缩写，翻译过来就是&amp;quot;表现层状态转化&amp;quot;。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;code&gt;Resource&lt;/code&gt;（资源） ：对象的单个实例。例如，一只动物。它可以是一段文本、一张图片、一首歌曲、一种服务，总之就是一个具体的实在。你可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的URI。要获取这个资源，访问它的URI就可以，因此URI就成了每一个资源的地址或独一无二的识别符。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

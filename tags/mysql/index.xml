@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/mysql/</link>
+    <description>Recent content in MySQL on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 16 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浅谈如何设计一个高并发系统</title>
+      <link>https://bytewalking.github.io/post/2020-01-16-high-concurrency-system-design/</link>
+      <pubDate>Thu, 16 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2020-01-16-high-concurrency-system-design/</guid>
+      <description>&lt;p&gt;从古至今，长江和黄河流域水患不断，远古时期大禹曾拓宽河道，清除淤沙让流水更加顺畅；都江堰作为史上最成功的的治水案例之一，用引流将岷江之水分流到多个支流中，以分担水流压力；三门峡和葛洲坝通过建造水库将水引入水库先存储起来，然后再想办法把水库中的水缓缓地排出去，以此提高下游的抗洪能力。而我们在应对高并发大流量时也会采用类似“抵御洪水”的方案，归纳起来共有三种方法。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>通过expalin可以得到什么？</title>
+      <link>https://bytewalking.github.io/post/2019-08-02-mysql-explain-interpretation/</link>
+      <pubDate>Sat, 03 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-08-02-mysql-explain-interpretation/</guid>
+      <description>&lt;h2 id=&#34;通过expalin可以得到&#34;&gt;通过expalin可以得到&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;表的读取顺序&lt;/li&gt;&#xA;&lt;li&gt;表的读取操作的操作类型&lt;/li&gt;&#xA;&lt;li&gt;哪些索引可以使用&lt;/li&gt;&#xA;&lt;li&gt;哪些索引被实际使用&lt;/li&gt;&#xA;&lt;li&gt;表之间的引用&lt;/li&gt;&#xA;&lt;li&gt;每张表有多少行被优化器查询&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;如何调用expalin命令&#34;&gt;如何调用expalin命令&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;只需要在SELECT前面加上EXPLAIN即可，例如&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

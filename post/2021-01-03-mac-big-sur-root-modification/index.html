@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="macOs Big Sur 根目录修改文件方法" />
+    <meta property="og:title" content="macOs Big Sur 根目录修改文件方法" />
+    <meta property="twitter:title" content="macOs Big Sur 根目录修改文件方法" />
+    
+
+    
+    <meta name="description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2021-01-03-mac-big-sur-root-modification/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>macOs Big Sur 根目录修改文件方法 | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2021-01-03-mac-big-sur-root-modification/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note/">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Evan Blog </h1>
+                    
+		    <span class="subheading">The journey is the reward</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <h2 id="step1-关闭系统保护sip">step1: 关闭系统保护SIP</h2>
+<ol>
+<li>开机按住Commond+R，进入系统Recovery模式，在terminal中输入：</li>
+</ol>
+<pre tabindex="0"><code>csrutil authenticated-root disable；
+csrutil disable
+</code></pre><ol start="2">
+<li>
+<p>如果关闭authenticated-root失败，你需要将【文件保险箱】停用</p>
+</li>
+<li>
+<p>然后重启系统</p>
+</li>
+</ol>
+<h2 id="step2-重新将系统盘挂载到本地">step2: 重新将系统盘挂载到本地</h2>
+<ol>
+<li>
+<p>在任意地方新建的目录，例如 /Users/name/Desktop/temp</p>
+</li>
+<li>
+<p>使用命令<code>sudo mount -o nobrowse -t apfs /dev/diskNsM /xxx/xx </code>重新将系统盘挂载到本地
+注意：diskNsM 为系统盘的设备名，这个在&quot;磁盘工具-设备&quot; 里可以看到（例如：disk1s5s1），注意要把后面的s1去掉，因为磁盘工具里面里显示的是系统盘的快照，挂载成这个snapshot是没用的！</p>
+</li>
+<li>
+<p>按上述描述，我们应该执行的命令是：</p>
+</li>
+</ol>
+<pre tabindex="0"><code>sudo mount -o nobrowse -t apfs /dev/disk1s5 /Users/name/Desktop/temp
+</code></pre><h2 id="step3-修改文件">step3: 修改文件</h2>
+<ol>
+<li>
+<p>经过step2的操作，系统盘就重新挂载到了桌面的temp文件夹下面，从这个文件夹进去就是系统根目录了。而且这个文件夹是可读可写的，我们把要修改的系统配置文件夹/文件 复制到相应的系统目录里</p>
+</li>
+<li>
+<p>我的需求只是在根目录下软链一个文件夹，所以在temp文件夹下，我只需执行以下命令</p>
+</li>
+</ol>
+<pre tabindex="0"><code>sudo Ln -s /Users/name/Workspace/ServiceLog/data0
+</code></pre><h2 id="step4-重建系统-snapshot">step4: 重建系统 snapshot</h2>
+<ol>
+<li>
+<p>使用到的命令为<code>sudo bless --folder /xxx/xx/System/Library/CoreServices --bootefi --create-snapshot</code>，其中/xxx/xx是最初设置的目录</p>
+</li>
+<li>
+<p>如果是上述例子，我们需要执行</p>
+</li>
+</ol>
+<pre tabindex="0"><code>sudo bless --folder /Users/name/Desktop/temp/System/Library/CoreServices --bootefi --create-snapshot
+</code></pre><ol start="3">
+<li>重启系统，会发现挂载的磁盘消失，而修改的设置已经写入到原先不能更改的系统文件中了</li>
+</ol>
+<h2 id="step5-重新开启sip">step5: 重新开启SIP</h2>
+<ol>
+<li>重新进入Recovery模式，在terminal输入</li>
+</ol>
+<pre tabindex="0"><code>csrutil enable
+csrutil authenticated-root enable
+</code></pre><ol start="2">
+<li>重新开启SIP以免系统失去安全防护</li>
+</ol>
+
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/zhao_evan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Programming Enthusiast, Game Player and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:phzhao7548@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="/img/WechatIMG52.png">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/bytewalking">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/blog" title="blog">
+                        blog
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+               
+            
+               
+                    <a href="/tags/github" title="github">
+                        github
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/hoopchina" title="hoopchina">
+                        hoopchina
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/istio" title="istio">
+                        istio
+                    </a>
+               
+            
+               
+                    <a href="/tags/java" title="java">
+                        java
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/kubernetes" title="kubernetes">
+                        kubernetes
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/mac" title="mac">
+                        mac
+                    </a>
+               
+            
+               
+                    <a href="/tags/microservice" title="microservice">
+                        microservice
+                    </a>
+               
+            
+               
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/python" title="python">
+                        python
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/security" title="security">
+                        security
+                    </a>
+               
+            
+               
+                    <a href="/tags/service-mesh" title="service mesh">
+                        service mesh
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/think" title="think">
+                        think
+                    </a>
+               
+            
+               
+                    <a href="/tags/think-deeply" title="think-deeply">
+                        think-deeply
+                    </a>
+               
+            
+               
+                    <a href="/tags/tips" title="tips">
+                        tips
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/vim" title="vim">
+                        vim
+                    </a>
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+            
+            <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+            
+            <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+            
+        </ul>
+    </section>
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>LAST POSTS</h5>
+        <ul>
+        
+            <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
+        
+            <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
+        
+            <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
+        
+            <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
+        
+            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
+        
+        </ul>
+    </section>
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

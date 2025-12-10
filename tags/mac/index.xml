@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/mac/</link>
+    <description>Recent content in Mac on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>macOs Big Sur 根目录修改文件方法</title>
+      <link>https://bytewalking.github.io/post/2021-01-03-mac-big-sur-root-modification/</link>
+      <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2021-01-03-mac-big-sur-root-modification/</guid>
+      <description>&lt;h2 id=&#34;step1-关闭系统保护sip&#34;&gt;step1: 关闭系统保护SIP&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;开机按住Commond+R，进入系统Recovery模式，在terminal中输入：&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;csrutil authenticated-root disable；&#xA;csrutil disable&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;如果关闭authenticated-root失败，你需要将【文件保险箱】停用&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mac OS X配置环境变量</title>
+      <link>https://bytewalking.github.io/post/2019-07-21-mac-os-x-config/</link>
+      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-07-21-mac-os-x-config/</guid>
+      <description>&lt;h3 id=&#34;mac端环境变量配置&#34;&gt;Mac端环境变量配置&lt;/h3&gt;&#xA;&lt;p&gt;Mac使用bash做为默认的shell&lt;/p&gt;&#xA;&lt;p&gt;MAC OS X环境配置的加载顺序&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;### 系统级别&#xA;&#xA;/etc/profile&#xA;&#xA;/etc/paths &#xA;&#xA;### 用户级别&#xA;&#xA;/.bash_profile &#xA;&#xA;/.bash_login &#xA;&#xA;/.profile &#xA;&#xA;/.bashrc&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;前两个是系统级别的环境变量，针对所有用户，后面四个带有 &lt;code&gt;~/&lt;/code&gt; 用户级别的环境变量。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

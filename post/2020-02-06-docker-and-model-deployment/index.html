@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="基于Docker容器的算法模型部署" />
+    <meta property="og:title" content="基于Docker容器的算法模型部署" />
+    <meta property="twitter:title" content="基于Docker容器的算法模型部署" />
+    
+
+    
+    <meta name="description" content="本文根据在工作中遇到的真实业务场景提出的技术实施方案">
+    <meta property="og:description" content="本文根据在工作中遇到的真实业务场景提出的技术实施方案" />
+    <meta property="twitter:description" content="本文根据在工作中遇到的真实业务场景提出的技术实施方案" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2020-02-06-docker-and-model-deployment/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>基于Docker容器的算法模型部署 | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2020-02-06-docker-and-model-deployment/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note/">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Evan Blog </h1>
+                    
+		    <span class="subheading">The journey is the reward</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <h3 id="技术选型背景">技术选型背景</h3>
+<p>模型开发是算法工程师的工作日常，模型算法的效果也决定着业务场景的上限，但是模型要发挥其作用，必须投入到实际生产场景，目前互联网环境下的生产场景主要是针对不同用户需求下的定制化业务服务，而模型要在业务场景下发挥它的价值就需要嵌入到业务服务当中，在这个过程中会面临以下几个问题：</p>
+<ul>
+<li>模型服务不同于常规的业务服务，常规业务服务的技术瓶颈在处理高并发请求和复杂的业务逻辑，而模型服务的技术瓶颈在CPU密集型计算和预测响应上，所以在请求密集的情况下模型服务会更占用CPU，同时在一次模型预估的时间也会高于常规业务服务的请求逻辑。</li>
+<li>算法工程师和研发工程师之间的技术栈不同，算法工程师大部分使用python进行特征工程，模型开发，研发工程师更多使用C++，java，Go这种工程能力更健壮的编程语言，因此模型在部署时面临着技术栈上的交流成本。</li>
+<li>模型是基于数据开发的，所以模型具有一定时效性，当业务场景下数据发生变动，模型自然也需要更新迭代，如果模型简单的嵌入到业务服务当中，就会面临模型更新就要影响到整个业务服务上的改动。</li>
+</ul>
+<p>基于上述可能面临的问题，提出基于docker容器的模型部署方式，解决以上问题的同时，该方式还具有以下优点：</p>
+<ul>
+<li>模型部署在K8S集群环境下，充分利用大规模集群资源</li>
+<li>不同模型封装在一个docker容器当中，所以模型预估计算相互独立，支持对多个模型进行预估</li>
+<li>可扩展性强，模型数量可扩展至百个，千个级别</li>
+</ul>
+<p>关于Docker容器</p>
+<p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</p>
+<p>【官方网站】https://www.docker.com/products/docker-desktop</p>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-6_17-44-57.png" alt="图片">
+
+</p>
+<h4 id="关于算法模型">关于算法模型</h4>
+<p>这里算法不同于传统意义上的计算机算法，主要指机器学习算法，详情可见机器学习综述。而模型就是算法在训练结束后，学习到一组参数或者规则，而这些参数和规则保存在一定格式的文件当中，模型预估的过程就是加载这些文件到内存当中，传入数据特征进行计算，最终计算得到一个结果，不同类型的模型计算得到的结果形式不同，但是多数监督模型是以概率值的形式输出。</p>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-6_18-19-21.png" alt="图片">
+
+</p>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-10_17-20-30.png" alt="图片">
+
+</p>
+<p>经上表述，模型服务化的目的简单来说就是将模型文件中保存的参数或者规则常驻到内存，提供一个API，让服务可以持续输出预测结果，当前主流的服务都采用restful API的方式，因此需要选择一个可以提供restful API的服务框架来实现模型服务化，因为python在算法模型方面有很优秀的第三方库支持，像numpy，sckit-learn， pandas，keras，tensorflow，所以python的服务框架将成为模型部署的首选，但碍于python作为解释性语言在性能上的劣势，可能会对服务性能造成影响，针对这个问题</p>
+<ul>
+<li>
+<p>减少服务python原生态代码的循环操作，尽可能使用numpy进行数据处理，sckit-learn库针对特征有很高效一套逻辑，可将特征处理看作另一种方式的模型保存到pkl文件，如同模型文件一样使用。</p>
+</li>
+<li>
+<p>基于上述描述下特征处理的方式，会造成不同特征处理逻辑存在大量文件问题，解决方式采用docker容器将各个模型特征处理文件和模型文件独立存放，在程序启动时，独立运行各个docker容器。</p>
+</li>
+<li>
+<p>对于复杂的深度学习模型，采用谷歌tensorflow-serving的服务框架进行模型预估。</p>
+</li>
+</ul>
+<p>至此，抽象出一套完整的模型集群式部署方案，在符合业务需求的情况下，保证一定的性能。</p>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-10_17-3-21.png" alt="图片">
+
+</p>
+<p>如图所示，将服务切分为图服务，(这里图指tensorflow当中的graph，一个模型即是一个Graph，固暂称其为图服务)，逻辑服务（主要指业务逻辑和特征处理逻辑，用于接收场景业务数据和相关数据库的增删改查等)，各种服务在各种的容器下，每个服务下的容器数量根据具体需求而定，当前处理方式采用一个模型占用一个容器，独立使用容器计算资源。基于上述架构设计，以谷歌开源的 tensorflow-sevring 项目作为图服务负责模型计算预估，自行开发基于python的Flask服务作为逻辑服务。</p>
+<h4 id="关于tensorflow-sevring服务">关于tensorflow-sevring服务</h4>
+<p>【官方代码】https://github.com/tensorflow/serving.git</p>
+<p>原serving代码由C++编写，需要谷歌开发的bazel编译器进行编译，故而推荐采用docker容器方式，避免编译源码时会出现各种版本环境依赖的错误。具体说明可见项目的readme，很详尽，基本能覆盖大多数需求，若有极特殊需求要定制开发，则需要改动其项目源码，再编译执行。具体改        动规则项目中也有说明。serving对加载的模型有自己的一套格式要求，这种格式命名为saved_model，在tensorflow2.0中这种方式已经成为了一种可选择的存储方式，但是在tensorflow1.x当中需要做一些定制的转换。</p>
+<p>saved_model格式
+
+  <img src="/img/docker-and-model-deployment/image2019-12-10_19-19-6.png" alt="图片">
+
+</p>
+<p>【简单实例】</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># 创建 tensorflow model 将模型保存至saved_model</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> tensorflow <span style="color:#ff79c6">as</span> tf
+</span></span><span style="display:flex;"><span>mnist <span style="color:#ff79c6">=</span> tf<span style="color:#ff79c6">.</span>keras<span style="color:#ff79c6">.</span>datasets<span style="color:#ff79c6">.</span>mnist
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(x_train, y_train),(x_test, y_test) <span style="color:#ff79c6">=</span> mnist<span style="color:#ff79c6">.</span>load_data()
+</span></span><span style="display:flex;"><span>x_train, x_test <span style="color:#ff79c6">=</span> x_train <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">255.0</span>, x_test <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">255.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#ff79c6">=</span> tf<span style="color:#ff79c6">.</span>keras<span style="color:#ff79c6">.</span>models<span style="color:#ff79c6">.</span>Sequential([
+</span></span><span style="display:flex;"><span>  tf<span style="color:#ff79c6">.</span>keras<span style="color:#ff79c6">.</span>layers<span style="color:#ff79c6">.</span>Flatten(input_shape<span style="color:#ff79c6">=</span>(<span style="color:#bd93f9">28</span>, <span style="color:#bd93f9">28</span>)),
+</span></span><span style="display:flex;"><span>  tf<span style="color:#ff79c6">.</span>keras<span style="color:#ff79c6">.</span>layers<span style="color:#ff79c6">.</span>Dense(<span style="color:#bd93f9">128</span>, activation<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;relu&#39;</span>),
+</span></span><span style="display:flex;"><span>  tf<span style="color:#ff79c6">.</span>keras<span style="color:#ff79c6">.</span>layers<span style="color:#ff79c6">.</span>Dropout(<span style="color:#bd93f9">0.2</span>),
+</span></span><span style="display:flex;"><span>  tf<span style="color:#ff79c6">.</span>keras<span style="color:#ff79c6">.</span>layers<span style="color:#ff79c6">.</span>Dense(<span style="color:#bd93f9">10</span>, activation<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;softmax&#39;</span>)
+</span></span><span style="display:flex;"><span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>compile(optimizer<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;adam&#39;</span>,
+</span></span><span style="display:flex;"><span>              loss<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;sparse_categorical_crossentropy&#39;</span>,
+</span></span><span style="display:flex;"><span>              metrics<span style="color:#ff79c6">=</span>[<span style="color:#f1fa8c">&#39;accuracy&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>fit(x_train, y_train, epochs<span style="color:#ff79c6">=</span><span style="color:#bd93f9">5</span>)
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>evaluate(x_test, y_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 关键步骤来来了, 是的，tensorflw2.0就是这么简单</span>
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>save(<span style="color:#f1fa8c">&#34;model/001&#34;</span>, save_format<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;tf&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># 创建 keras model 并将模型保存至saved_model</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> <span style="color:#ff79c6">not</span> os<span style="color:#ff79c6">.</span>path<span style="color:#ff79c6">.</span>exists(<span style="color:#f1fa8c">&#34;data&#34;</span>):
+</span></span><span style="display:flex;"><span>    os<span style="color:#ff79c6">.</span>mkdir(<span style="color:#f1fa8c">&#34;data&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> keras.datasets <span style="color:#ff79c6">import</span> mnist
+</span></span><span style="display:flex;"><span>mnist<span style="color:#ff79c6">.</span>load_data(<span style="color:#f1fa8c">&#34;data&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> keras.models <span style="color:#ff79c6">import</span> Sequential
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> keras.layers <span style="color:#ff79c6">import</span> Dense, Flatten, Dropout
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> keras.utils <span style="color:#ff79c6">import</span> to_categorical
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(x_train, y_train), (x_test, y_test) <span style="color:#ff79c6">=</span> mnist<span style="color:#ff79c6">.</span>load_data()
+</span></span><span style="display:flex;"><span>y_train <span style="color:#ff79c6">=</span> to_categorical(y_train, <span style="color:#bd93f9">10</span>)
+</span></span><span style="display:flex;"><span>y_test <span style="color:#ff79c6">=</span> to_categorical(y_test, <span style="color:#bd93f9">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#ff79c6">=</span> Sequential()
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>add(Flatten(input_shape<span style="color:#ff79c6">=</span>(<span style="color:#bd93f9">28</span>, <span style="color:#bd93f9">28</span>)))
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>add(Dense(<span style="color:#bd93f9">128</span>, activation<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;relu&#34;</span>))
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>add(Dropout(<span style="color:#bd93f9">0.2</span>))
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>add(Dense(<span style="color:#bd93f9">10</span>, activation<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;softmax&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>compile(optimizer<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;adam&#39;</span>,
+</span></span><span style="display:flex;"><span>              loss<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;categorical_crossentropy&#39;</span>,
+</span></span><span style="display:flex;"><span>              metrics<span style="color:#ff79c6">=</span>[<span style="color:#f1fa8c">&#39;accuracy&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>fit(x_train, y_train, epochs<span style="color:#ff79c6">=</span><span style="color:#bd93f9">5</span>)
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>evaluate(x_test, y_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 保存模型为h5文件</span>
+</span></span><span style="display:flex;"><span>model<span style="color:#ff79c6">.</span>save(<span style="color:#f1fa8c">&#34;model.h5&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 打印出模型输入tensor和输出tensor，名称将用于下一步ckpt模型转存为saved_model</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(model<span style="color:#ff79c6">.</span>input<span style="color:#ff79c6">.</span>name)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(model<span style="color:#ff79c6">.</span>output<span style="color:#ff79c6">.</span>name)
+</span></span></code></pre></div><p><strong>关键步骤</strong></p>
+<p>将原h5文件转换为ckpt的文件，同tensorflow训练的保存的方式，这里通过脚本 keras_to_tensorflow.py 进行转换，算法组内部有该脚本，可在机器学习服务器获取，转换方法如下：</p>
+<p>执行命令</p>
+<pre tabindex="0"><code>python ~/Code/logos/keras_to_tensorflow.py \
+  --input_model $PATH/model.h5 \
+  --output_model $PATH/model.pb \
+  --save_graph_def true \
+  --output_meta_ckpt true
+
+执行结束后将得到4个文件，如下：
+  
+  checkpoint
+  model.data-00000-of-00001
+  model.index
+  model.meta
+</code></pre><p>saved_model</p>
+<pre tabindex="0"><code># 将ckpt转存为saved_model格式
+import tensorflow as tf
+
+print(tf.__version__)
+saver = tf.train.import_meta_graph(&#34;model.meta&#34;)
+
+# 打印模型的变量，即模型权重
+for var in tf.trainable_variables():
+    print(var)
+
+with tf.Session() as sess:
+    saver.restore(sess, &#34;model&#34;)
+    graph = tf.get_default_graph()
+    for tensor in tf.get_default_graph().as_graph_def().node:
+        print(tensor.name)
+    
+    # 此处填写前面记录的模型输入名，输出名，这里用input，output代指，具体根据自己模型进行替换
+    input = graph.get_tensor_by_name(&#34;input:0&#34;)
+    output = graph.get_tensor_by_name(&#34;output:0&#34;)
+
+    builder = tf.saved_model.builder.SavedModelBuilder(&#34;model/001/&#34;)
+    inputs = {
+        &#34;inputs&#34;: tf.saved_model.utils.build_tensor_info(input),
+    }
+    output = {&#34;prediction&#34;: tf.saved_model.utils.build_tensor_info(output)}
+    prediction_signature = tf.saved_model.signature_def_utils.build_signature_def(
+        inputs=inputs,
+        outputs=output,
+        method_name=tf.saved_model.signature_constants.PREDICT_METHOD_NAME
+    )
+    builder.add_meta_graph_and_variables(
+        sess,
+        [tf.saved_model.tag_constants.SERVING],
+        {tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY: prediction_signature},
+        main_op=tf.tables_initializer()
+    )
+    builder.save()
+</code></pre><p>上述步骤就完成了，得到saved_model文件即可以部署至serving，下面通过构建镜像，启动镜像完成部署，构建镜像Docfile如下:</p>
+<pre tabindex="0"><code>FROM harbor.sit.hupu.io/base/tensorflow-serving:2.0.0
+
+ COPY models/ /models/
+
+ EXPOSE 8500 8501
+
+ ENV MODEL_CONFIG_FILE=/models/models.config
+
+ LABEL XXX=&#34;XXX@xxx.com&#34;
+</code></pre><p>其中models.config文件如下:</p>
+<pre tabindex="0"><code>model_config_list: {
+    config: {
+      name:&#34;model_name&#34;,
+      base_path:&#34;/models/model_name/&#34;,
+      model_platform:&#34;tensorflow&#34;
+    }
+}
+</code></pre><p>构建镜像</p>
+<p>docker build -t model:1.0 project/model/.</p>
+<p>启动容器</p>
+<p>docker run -d -p 8500:8500 -p 8501:8501 &ndash;name xxx-xxx-tf model:1.0 &ndash;model_config_file=/models/models.config</p>
+<h4 id="关于python-flask-服务">关于python Flask 服务</h4>
+<p>【说明文档】http://docs.jinkan.org/docs/flask/</p>
+<p>【简单实例】</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> pickle <span style="color:#ff79c6">import</span> load
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> flask <span style="color:#ff79c6">import</span> Flask, request, Response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app <span style="color:#ff79c6">=</span> Flask(<span style="color:#8be9fd;font-style:italic">__name__</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># load features transformer</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">with</span> <span style="color:#8be9fd;font-style:italic">open</span>(<span style="color:#f1fa8c">&#34;transformer.pkl&#34;</span>, <span style="color:#f1fa8c">&#34;rb&#34;</span>) <span style="color:#ff79c6">as</span> f:
+</span></span><span style="display:flex;"><span>   transformer <span style="color:#ff79c6">=</span> load(f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># load ml pkl model</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">with</span> <span style="color:#8be9fd;font-style:italic">open</span>(<span style="color:#f1fa8c">&#34;model.pkl&#34;</span>, <span style="color:#f1fa8c">&#34;rb&#34;</span>) <span style="color:#ff79c6">as</span> f:
+</span></span><span style="display:flex;"><span>    model <span style="color:#ff79c6">=</span> load(f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#f1fa8c">&#34;/get_score&#34;</span>, methods<span style="color:#ff79c6">=</span>[<span style="color:#f1fa8c">&#34;POST&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">predict_func</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34; 模型预测API
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    :return: json，code：200，data：预测概率
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    request_data <span style="color:#ff79c6">=</span> request<span style="color:#ff79c6">.</span>data<span style="color:#ff79c6">.</span>decode()  <span style="color:#6272a4"># binary 转换为 string</span>
+</span></span><span style="display:flex;"><span>    request_json <span style="color:#ff79c6">=</span> json<span style="color:#ff79c6">.</span>loads(request_data)  <span style="color:#6272a4"># json 转换为 dict</span>
+</span></span><span style="display:flex;"><span>    x_data <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>DataFrame(request_json[<span style="color:#f1fa8c">&#34;data&#34;</span>])
+</span></span><span style="display:flex;"><span>    x_features <span style="color:#ff79c6">=</span> transformer<span style="color:#ff79c6">.</span>transform(x_data)
+</span></span><span style="display:flex;"><span>    pred <span style="color:#ff79c6">=</span> model<span style="color:#ff79c6">.</span>predict(x_features)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> Response(json<span style="color:#ff79c6">.</span>dumps({<span style="color:#f1fa8c">&#34;msg&#34;</span>: <span style="color:#f1fa8c">&#34;Successful!&#34;</span>, <span style="color:#f1fa8c">&#34;code&#34;</span>: <span style="color:#bd93f9">200</span>, <span style="color:#f1fa8c">&#34;data&#34;</span>: pred}))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#f1fa8c">&#39;/health&#39;</span>, methods<span style="color:#ff79c6">=</span>[<span style="color:#f1fa8c">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">health</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34; 服务健康检查
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    :return: json，code：200
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> Response(json<span style="color:#ff79c6">.</span>dumps({<span style="color:#f1fa8c">&#34;health&#34;</span>: <span style="color:#f1fa8c">&#34;status&#34;</span>, <span style="color:#f1fa8c">&#34;code&#34;</span>: <span style="color:#bd93f9">200</span>}))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">__name__</span> <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    app<span style="color:#ff79c6">.</span>run(host<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;0.0.0.0&#34;</span>, port<span style="color:#ff79c6">=</span><span style="color:#bd93f9">5000</span>)
+</span></span></code></pre></div><ul>
+<li>模型部署</li>
+</ul>
+<p>模型部署需要申请提交工单，进行新应用申请，三段式命名，eg：srs-agg-api，之后走应用上线新流程，依旧需要提交工单，通过后项目将自动流转，sit环境 &ndash;&gt; stg环境 &ndash;&gt; prd 环境。</p>
+<ol>
+<li>应用流程</li>
+</ol>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-13_14-24-58.png" alt="图片">
+
+</p>
+<ol start="2">
+<li>Jenkins 构建监控</li>
+</ol>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-10_17-29-2.png" alt="图片">
+
+</p>
+<ol start="3">
+<li>容器应用日志查询</li>
+</ol>
+<p>
+  <img src="/img/docker-and-model-deployment/image2019-12-13_14-18-31.png" alt="图片">
+
+</p>
+
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/zhao_evan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Programming Enthusiast, Game Player and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:phzhao7548@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="/img/WechatIMG52.png">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/bytewalking">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/blog" title="blog">
+                        blog
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+               
+            
+               
+                    <a href="/tags/github" title="github">
+                        github
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/hoopchina" title="hoopchina">
+                        hoopchina
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/istio" title="istio">
+                        istio
+                    </a>
+               
+            
+               
+                    <a href="/tags/java" title="java">
+                        java
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/kubernetes" title="kubernetes">
+                        kubernetes
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/mac" title="mac">
+                        mac
+                    </a>
+               
+            
+               
+                    <a href="/tags/microservice" title="microservice">
+                        microservice
+                    </a>
+               
+            
+               
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/python" title="python">
+                        python
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/security" title="security">
+                        security
+                    </a>
+               
+            
+               
+                    <a href="/tags/service-mesh" title="service mesh">
+                        service mesh
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/think" title="think">
+                        think
+                    </a>
+               
+            
+               
+                    <a href="/tags/think-deeply" title="think-deeply">
+                        think-deeply
+                    </a>
+               
+            
+               
+                    <a href="/tags/tips" title="tips">
+                        tips
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/vim" title="vim">
+                        vim
+                    </a>
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+            
+            <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+            
+            <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+            
+        </ul>
+    </section>
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>LAST POSTS</h5>
+        <ul>
+        
+            <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
+        
+            <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
+        
+            <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
+        
+            <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
+        
+            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
+        
+        </ul>
+    </section>
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

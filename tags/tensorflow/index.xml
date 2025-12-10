@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tensorflow on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/tensorflow/</link>
+    <description>Recent content in Tensorflow on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于Docker容器的算法模型部署</title>
+      <link>https://bytewalking.github.io/post/2020-02-06-docker-and-model-deployment/</link>
+      <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2020-02-06-docker-and-model-deployment/</guid>
+      <description>&lt;h3 id=&#34;技术选型背景&#34;&gt;技术选型背景&lt;/h3&gt;&#xA;&lt;p&gt;模型开发是算法工程师的工作日常，模型算法的效果也决定着业务场景的上限，但是模型要发挥其作用，必须投入到实际生产场景，目前互联网环境下的生产场景主要是针对不同用户需求下的定制化业务服务，而模型要在业务场景下发挥它的价值就需要嵌入到业务服务当中，在这个过程中会面临以下几个问题：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io/https://img.zhaohuabing.com/post-bg-2015.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io/https://img.zhaohuabing.com/post-bg-2015.jpg" />
+    
+
+    
+    <meta name="title" content="创造者和他们的工具——我的利器" />
+    <meta property="og:title" content="创造者和他们的工具——我的利器" />
+    <meta property="twitter:title" content="创造者和他们的工具——我的利器" />
+    
+
+    
+    <meta name="description" content="在网上翻阅大佬们的博客时发现了这个利器社群计划,正好最近自己也在写博客,就把这些问题也记录下来吧，将我使用的工具分享出来">
+    <meta property="og:description" content="在网上翻阅大佬们的博客时发现了这个利器社群计划,正好最近自己也在写博客,就把这些问题也记录下来吧，将我使用的工具分享出来" />
+    <meta property="twitter:description" content="在网上翻阅大佬们的博客时发现了这个利器社群计划,正好最近自己也在写博客,就把这些问题也记录下来吧，将我使用的工具分享出来" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2019-4-25-creators-and-their-tools/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>创造者和他们的工具——我的利器 | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2019-4-25-creators-and-their-tools/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note/">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('https://img.zhaohuabing.com/post-bg-2015.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>创造者和他们的工具——我的利器</h1>
+                    <h2 class="subheading">creators and their tools - my weapon</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                EvanZhao
+                             
+                            on 
+                            Sunday, May 5, 2019
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>在网上翻阅大佬们的博客时发现了这个利器社群计划,正好最近自己也在写博客,就把这些问题也记录下来吧</p>
+<h2 id="介绍一下你自己和所做的工作">介绍一下你自己和所做的工作。</h2>
+<p>我是一名即将毕业，但是已经入行半年多的程序员,目前在一家留学教育公司做web开发工作</p>
+<h2 id="你的职业生涯的转折点是什么">你的职业生涯的转折点是什么？</h2>
+<p>职业生涯才刚刚开始,不觉得有什么转折点,目前是很期待出现具有挑战性的工作机会</p>
+<h2 id="你都在使用哪些硬件">你都在使用哪些硬件？</h2>
+<h3 id="计算机">计算机:</h3>
+<p><strong>Mac Pro 13</strong></p>
+<p>从Window到Linux再到现在的Mac，最终发现还是Mac最适合我。这台机子现在是我的主要生产工具,因为平时经常带着电脑出门自习(以前一直背着15寸电脑的巨大电脑包出门,饱受巨大电脑包折磨/(ㄒoㄒ)/),所以还是舍弃了15寸的性能买了13寸,如果只是用来编程的话,13寸Pro的性能完全够用</p>
+<p><strong>Lenovo XiaoXing</strong></p>
+<p>这台陪我度过大学时光的笔记最终还是被我刷上Linux操作系统,被我用来做各种实验.在买Mac前工作时还会带上她,虽然在Linux做开发时爽的要飞起来,但是因为缺少大量生活和社交软件,遇到某些问题就会变得超级麻烦。但是使用Linux这段时间让我学到了很多好玩的东西</p>
+<p><strong>Raspberry Pi</strong></p>
+<p>大学时买的Raspberry Pi 3 Model B,可以安装树莓派定制的Linux操作系统,各种传感器也可以通过GPIO接口连接到树莓派,大二时用它做了个带摄像头可以在Web端远程控制小车,然后就装上了很多传感器,做成一个很奇怪的东西.现在没那么多时间折腾这些硬件了,已经吃了很久的灰了</p>
+<p><strong>G502</strong></p>
+<p>这款鼠标也是大学时入手的，那时还比较喜欢玩游戏，又发现这是一款可编程鼠标，就入手了。鼠标上的呼吸灯还是很抢眼的，鼠标灵敏度也可以顺滑切换，但是用惯了Mac的触控板后就不再想用鼠标了</p>
+<p><strong>HHKB Pro BT</strong></p>
+<p>这款键盘很配合mac使用，静电容键盘，稳定、迅速、全键无冲突、无比灵敏，也没有机械键盘烦人的敲击声。无键印的键盘，让人感觉b格很高。码农最常接触设备就是键盘了，所以拥有一个合手的键盘非常重要</p>
+<h3 id="手机">手机</h3>
+<p><strong>iPhone XR</strong></p>
+<p>以前那位陪我度过3年青葱岁月的Samsung爆炸了.啊不是,是进水身亡了.正好遇到苹果手机疯狂降价,就入手了.用起来体验很棒,但对于爱折腾的我来说,苹果系统的封闭让我缺失了好多乐趣,还是很怀念用Samsung时各种魔改的日子</p>
+<h3 id="泡面盖">泡面盖</h3>
+<p><strong>Kindle</strong></p>
+<p>我追女票时,以为她和我一样是个读书爱好者,就送了她一个和我一样的Kindle,现在我用两Kindle当泡面盖,泡出来的面都特别香(ˇˍˇ) 哈哈哈。Kindle最让我惊喜的是，我可以带着Kindle在阳光下看书</p>
+<h3 id="游戏机">游戏机</h3>
+<p><strong>PS4 Pro</strong></p>
+<p>如果你喜欢一个人玩角色扮演类游戏，你可以买个PS4(怎么有种很悲伤的感觉)。平时很少有时间打开它，只有小长假的时候才有时间完整的体验一款游戏，我不太喜欢在电脑上安装游戏，还是各种做自己擅长的事情比较好</p>
+<h2 id="软件呢">软件呢？</h2>
+<p>这个就好多了</p>
+<h3 id="编程">编程:</h3>
+<p><strong>IDEA</strong></p>
+<p>写JAVA必备神器，从大学时期就一直在用，大家应该都用过。</p>
+<p><strong>Sublime</strong></p>
+<p>Sublime真的是我用过最好的文本编辑器，配合各种插件，不管是文档查阅还是代码编写都很方便。这也是我的主要生产工具</p>
+<p><strong>Pycharm</strong></p>
+<p>写大型Python项目时会使用它，但是编写Python脚本时还是会使用Sublime</p>
+<p><strong>Vim</strong></p>
+<p>当我接触Linux后就认识的Vim，在Linux终端内使用Vim会非常方便。而且很多公司在面试时都会问Vim的使用技巧方面的问题。我一般是在连接远程服务器时才会使用Vim看代码</p>
+<p><strong>Dash</strong></p>
+<p>在Mac上写代码的人应该都知道的，一款文档查询工具</p>
+<h3 id="数据库管理">数据库管理:</h3>
+<p><strong>DBeaver</strong></p>
+<p>为什么用它呢,因为没有linux版的navicat,用久了还觉得非常好用,然后在mac上也安装了一个</p>
+<p><strong>TablePlus</strong></p>
+<p>说实话，当初我是被它的颜值吸引的。转向Mac后就不再使用DBeaver，毕竟DBeaver是使用Java开发，TablePlus 采用 Swift 等高效语言开发而成，原生化的设计使这款软件对系统资源的占用非常合理，帮助用户在多个数据库连接中同时管理无数个数据库表，灵活的界面交互设计使得切换任务非常简单</p>
+<h3 id="终端">终端:</h3>
+<p><strong>iTerm</strong></p>
+<p>iTerm配合Oh My Zsh后，你有了全新的终端体验。Zsh也支持安装各种插件，对于长期在命令行下工作的人来说，iTerm+Zsh会有更完美的体验</p>
+<h3 id="笔记">笔记:</h3>
+<p><strong>MarginNote 3</strong></p>
+<p>极力推荐</p>
+<p>这是一款可以一边阅读PDF还可以一边做笔记画思维导图，还可以把笔记内容导出到印象笔记的工具。你可以对PDF内的内容进行裁剪，分类，打上标记。是我用过最好的PDF阅读工具了。非常适合学生群体，也非常适合喜欢看电子书学习的人</p>
+<p><strong>印象笔记</strong></p>
+<p>大脑是用来思考的，不是用来记录的，所以使用一款好的笔记工具是非常重要的一件事。印象笔记用过笔记中最好用的笔记了,为特别喜欢用它的剪影功能，在网页是看到好的文章或技术教程我都会用剪影功能把他们记录下来。如果不是因为linux上没有官网版的印象笔记,我是不会换成为之笔记的</p>
+<p><strong>为之笔记</strong></p>
+<p>因为没有linux版的印象笔记,但是因为它支持MarkDown,所以我还是蛮喜欢用它的。为之笔记是国内一家公司制作的，做的很棒，必须支持一下</p>
+<h2 id="其他">其他:</h2>
+<p><strong>Folx</strong></p>
+<p>因为我无法忍受迅雷的广告和各种限制，所以选用了Folx作为替代迅雷的下载工具</p>
+<p><strong>Reeder</strong></p>
+<p>现在很少有人会使用RSS了吧，但是我还是喜欢这种以自己选择的兴趣为导向的自主阅读方式，对人工智障算法推荐的文章很反感</p>
+<p>还有好多想介绍的软件，篇幅太长了就不一一介绍了</p>
+<h2 id="你最理想的工作环境是什么">你最理想的工作环境是什么？</h2>
+<p>通风一定要好,不需要绝对的安静,但决不能有噪音.其实也没什么特别要求，沉浸在编码的世界后对外界的感觉会变弱，只要不被打扰就可以了</p>
+<h2 id="你平时获得工作灵感的方式有哪些">你平时获得工作灵感的方式有哪些？</h2>
+<p>做一些与编程无关的事情休息一下，或者去github上逛逛，或者和朋友聊聊，灵感总在不禁意间到来</p>
+<h2 id="推荐一件生活中的利器给大家">推荐一件生活中的利器给大家。</h2>
+<p>各种智能家居，比如可以给插座设置定时任务到下班时间就开始煮饭开启热水器，或者给加湿器设置启动条件当湿度传感器量出湿度小于30%就开启。等等，有各种个样的玩法。很期待未来物联网进一步发展给生活带来的惊喜。</p>
+<pre><code>本文参与了「利器社群计划」，发现更多创造者和他们的工具:http://liqi.io/community/
+</code></pre>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2019-06-30-linux-tips/" data-toggle="tooltip" data-placement="top" title="Linux 常用命令">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2019-5-6-10-simple-tips-for-engineers/" data-toggle="tooltip" data-placement="top" title="致工程师的10个简单技巧">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/blog" title="blog">
+                            blog
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/github" title="github">
+                            github
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/hoopchina" title="hoopchina">
+                            hoopchina
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/istio" title="istio">
+                            istio
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/java" title="java">
+                            java
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mac" title="mac">
+                            mac
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/microservice" title="microservice">
+                            microservice
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mysql" title="mysql">
+                            mysql
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/python" title="python">
+                            python
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/security" title="security">
+                            security
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/service-mesh" title="service mesh">
+                            service mesh
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/think" title="think">
+                            think
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/think-deeply" title="think-deeply">
+                            think-deeply
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/tips" title="tips">
+                            tips
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/vim" title="vim">
+                            vim
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+                        
+                        <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

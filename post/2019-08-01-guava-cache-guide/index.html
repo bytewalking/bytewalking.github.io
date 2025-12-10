@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Guava Cache 用法指南" />
+    <meta property="og:title" content="Guava Cache 用法指南" />
+    <meta property="twitter:title" content="Guava Cache 用法指南" />
+    
+
+    
+    <meta name="description" content="虽然不用自己造轮子，但是要弄懂轮子是怎么跑起来的，以后有时间会把谷歌原版的Guava教程翻译出来">
+    <meta property="og:description" content="虽然不用自己造轮子，但是要弄懂轮子是怎么跑起来的，以后有时间会把谷歌原版的Guava教程翻译出来" />
+    <meta property="twitter:description" content="虽然不用自己造轮子，但是要弄懂轮子是怎么跑起来的，以后有时间会把谷歌原版的Guava教程翻译出来" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2019-08-01-guava-cache-guide/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Guava Cache 用法指南 | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2019-08-01-guava-cache-guide/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note/">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Evan Blog </h1>
+                    
+		    <span class="subheading">The journey is the reward</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <p>Guava Cache是在内存中缓存数据，相比较于数据库或redis存储，访问内存中的数据会更加高效。Guava官网介绍，下面的这几种情况可以考虑使用Guava Cache：</p>
+<ul>
+<li>
+<p>愿意消耗一些内存空间来提升速度。</p>
+</li>
+<li>
+<p>预料到某些键会被多次查询。</p>
+</li>
+<li>
+<p>缓存中存放的数据总量不会超出内存容量。</p>
+</li>
+</ul>
+<p>所以，可以将程序频繁用到的少量数据存储到Guava Cache中，以改善程序性能。下面对Guava Cache的用法进行详细的介绍。</p>
+<h2 id="构建缓存对象">构建缓存对象</h2>
+<p>接口Cache代表一块缓存，它有如下方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Cache</span><span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>    V <span style="color:#50fa7b">get</span>(K key, Callable<span style="color:#ff79c6">&lt;?</span> <span style="color:#8be9fd;font-style:italic">extends</span> V<span style="color:#ff79c6">&gt;</span> valueLoader) <span style="color:#8be9fd;font-style:italic">throws</span> ExecutionException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ImmutableMap<span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">getAllPresent</span>(Iterable<span style="color:#ff79c6">&lt;?&gt;</span> keys);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">put</span>(K key, V value);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">putAll</span>(Map<span style="color:#ff79c6">&lt;?</span> <span style="color:#8be9fd;font-style:italic">extends</span> K, <span style="color:#ff79c6">?</span> <span style="color:#8be9fd;font-style:italic">extends</span> V<span style="color:#ff79c6">&gt;</span> m);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">invalidate</span>(Object key);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">invalidateAll</span>(Iterable<span style="color:#ff79c6">&lt;?&gt;</span> keys);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">invalidateAll</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">long</span> <span style="color:#50fa7b">size</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    CacheStats <span style="color:#50fa7b">stats</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ConcurrentMap<span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">asMap</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">cleanUp</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以通过CacheBuilder类构建一个缓存对象，CacheBuilder类采用builder设计模式，它的每个方法都返回CacheBuilder本身，直到build方法被调用。构建一个缓存对象代码如下。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>().<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;word&#34;</span>,<span style="color:#f1fa8c">&#34;Hello Guava Cache&#34;</span>);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;word&#34;</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的代码通过CacheBuilder.newBuilder().build()这句代码创建了一个Cache缓存对象，并在缓存对象中存储了key为word，value为Hello Guava Cache的一条记录。可以看到Cache非常类似于JDK中的Map，但是相比于Map，Guava Cache提供了很多更强大的功能。</p>
+<h2 id="设置最大存储">设置最大存储</h2>
+<p>Guava Cache可以在构建缓存对象时指定缓存所能够存储的最大记录数量。当Cache中的记录数量达到最大值后再调用put方法向其中添加对象，Guava会先从当前缓存的对象记录中选择一条删除掉，腾出空间后再将新的对象存储到Cache中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(2)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,<span style="color:#f1fa8c">&#34;value1&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>,<span style="color:#f1fa8c">&#34;value2&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;第一个值：&#34;</span> <span style="color:#ff79c6">+</span> cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;第二个值：&#34;</span> <span style="color:#ff79c6">+</span> cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;第三个值：&#34;</span> <span style="color:#ff79c6">+</span> cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面代码在构造缓存对象时，通过CacheBuilder类的maximumSize方法指定Cache最多可以存储两个对象，然后调用Cache的put方法向其中添加了三个对象。</p>
+<h2 id="设置过期时间">设置过期时间</h2>
+<p>在构建Cache对象时，可以通过CacheBuilder类的expireAfterAccess和expireAfterWrite两个方法为缓存中的对象指定过期时间，过期的对象将会被缓存自动删除。其中，expireAfterWrite方法指定对象被写入到缓存后多久过期，expireAfterAccess指定对象多久没有被访问后过期。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(2)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">expireAfterWrite</span>(3,TimeUnit.<span style="color:#50fa7b">SECONDS</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,<span style="color:#f1fa8c">&#34;value1&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd">int</span> time <span style="color:#ff79c6">=</span> 1;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">while</span>(<span style="color:#ff79c6">true</span>) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;第&#34;</span> <span style="color:#ff79c6">+</span> time<span style="color:#ff79c6">++</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;次取到key1的值为：&#34;</span> <span style="color:#ff79c6">+</span> cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>));
+</span></span><span style="display:flex;"><span>            Thread.<span style="color:#50fa7b">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的代码在构造Cache对象时，通过CacheBuilder的expireAfterWrite方法指定put到Cache中的对象在3秒后会过期。在Cache对象中存储一条对象记录后，每隔1秒读取一次这条记录。</p>
+<p>下面代码是expireAfterAccess的例子。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(2)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">expireAfterAccess</span>(3,TimeUnit.<span style="color:#50fa7b">SECONDS</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,<span style="color:#f1fa8c">&#34;value1&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd">int</span> time <span style="color:#ff79c6">=</span> 1;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">while</span>(<span style="color:#ff79c6">true</span>) {
+</span></span><span style="display:flex;"><span>            Thread.<span style="color:#50fa7b">sleep</span>(time<span style="color:#ff79c6">*</span>1000);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;睡眠&#34;</span> <span style="color:#ff79c6">+</span> time<span style="color:#ff79c6">++</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;秒后取到key1的值为：&#34;</span> <span style="color:#ff79c6">+</span> cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过CacheBuilder的expireAfterAccess方法指定Cache中存储的对象如果超过3秒没有被访问就会过期。while中的代码每sleep一段时间就会访问一次Cache中存储的对象key1，每次访问key1之后下次sleep的时间会加长一秒。也可以同时用expireAfterAccess和expireAfterWrite方法指定过期时间，这时只要对象满足两者中的一个条件就会被自动过期删除。</p>
+<h2 id="弱引用">弱引用</h2>
+<p>可以通过weakKeys和weakValues方法指定Cache只保存对缓存记录key和value的弱引用。这样当没有其他强引用指向key和value时，key和value对象就会被垃圾回收器回收。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,Object<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(2)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">weakValues</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        Object value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Object();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,value);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Object();<span style="color:#6272a4">//原对象不再有强引用</span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">gc</span>();
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面代码的打印结果是null。构建Cache时通过weakValues方法指定Cache只保存记录值的一个弱引用。当给value引用赋值一个新的对象之后，就不再有任何一个强引用指向原对象。System.gc()触发垃圾回收后，原对象就被清除了。</p>
+<h2 id="显示清除">显示清除</h2>
+<p>可以调用Cache的invalidateAll或invalidate方法显示删除Cache中的记录。invalidate方法一次只能删除Cache中一个记录，接收的参数是要删除记录的key。invalidateAll方法可以批量删除Cache中的记录，当没有传任何参数时，invalidateAll方法将清除Cache中的全部记录。invalidateAll也可以接收一个Iterable类型的参数，参数中包含要删除记录的所有key值。下面代码对此做了示例。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>().<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        Object value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Object();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,<span style="color:#f1fa8c">&#34;value1&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>,<span style="color:#f1fa8c">&#34;value2&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span>();
+</span></span><span style="display:flex;"><span>        list.<span style="color:#50fa7b">add</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>);
+</span></span><span style="display:flex;"><span>        list.<span style="color:#50fa7b">add</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">invalidateAll</span>(list);<span style="color:#6272a4">//批量清除list中全部key对应的记录</span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>代码中构造了一个集合list用于保存要删除记录的key值，然后调用invalidateAll方法批量删除key1和key2对应的记录，只剩下key3对应的记录没有被删除。</p>
+<h2 id="移除监听器">移除监听器</h2>
+<p>可以为Cache对象添加一个移除监听器，这样当有记录被删除时可以感知到这个事件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        RemovalListener<span style="color:#ff79c6">&lt;</span>String, String<span style="color:#ff79c6">&gt;</span> listener <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> RemovalListener<span style="color:#ff79c6">&lt;</span>String, String<span style="color:#ff79c6">&gt;</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onRemoval</span>(RemovalNotification<span style="color:#ff79c6">&lt;</span>String, String<span style="color:#ff79c6">&gt;</span> notification) {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;[&#34;</span> <span style="color:#ff79c6">+</span> notification.<span style="color:#50fa7b">getKey</span>() <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;:&#34;</span> <span style="color:#ff79c6">+</span> notification.<span style="color:#50fa7b">getValue</span>() <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;] is removed!&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(3)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">removalListener</span>(listener)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        Object value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Object();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,<span style="color:#f1fa8c">&#34;value1&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>,<span style="color:#f1fa8c">&#34;value2&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key4&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key5&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key6&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key7&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key8&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>removalListener方法为Cache指定了一个移除监听器，这样当有记录从Cache中被删除时，监听器listener就会感知到这个事件。</p>
+<h2 id="自动加载">自动加载</h2>
+<p>Cache的get方法有两个参数，第一个参数是要从Cache中获取记录的key，第二个记录是一个Callable对象。当缓存中已经存在key对应的记录时，get方法直接返回key对应的记录。如果缓存中不包含key对应的记录，Guava会启动一个线程执行Callable对象中的call方法，call方法的返回值会作为key对应的值被存储到缓存中，并且被get方法返回。下面是一个多线程的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>            .<span style="color:#50fa7b">maximumSize</span>(3)
+</span></span><span style="display:flex;"><span>            .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">new</span> Thread(<span style="color:#ff79c6">new</span> Runnable() {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">run</span>() {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;thread1&#34;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">try</span> {
+</span></span><span style="display:flex;"><span>                    String value <span style="color:#ff79c6">=</span> cache.<span style="color:#50fa7b">get</span>(<span style="color:#f1fa8c">&#34;key&#34;</span>, <span style="color:#ff79c6">new</span> Callable<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span>() {
+</span></span><span style="display:flex;"><span>                        <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">call</span>() <span style="color:#8be9fd;font-style:italic">throws</span> Exception {
+</span></span><span style="display:flex;"><span>                            System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;load1&#34;</span>); <span style="color:#6272a4">//加载数据线程执行标志</span>
+</span></span><span style="display:flex;"><span>                            Thread.<span style="color:#50fa7b">sleep</span>(1000); <span style="color:#6272a4">//模拟加载时间</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;auto load by Callable&#34;</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    });
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;thread1 &#34;</span> <span style="color:#ff79c6">+</span> value);
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff79c6">catch</span> (ExecutionException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#50fa7b">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }).<span style="color:#50fa7b">start</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">new</span> Thread(<span style="color:#ff79c6">new</span> Runnable() {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">run</span>() {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;thread2&#34;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">try</span> {
+</span></span><span style="display:flex;"><span>                    String value <span style="color:#ff79c6">=</span> cache.<span style="color:#50fa7b">get</span>(<span style="color:#f1fa8c">&#34;key&#34;</span>, <span style="color:#ff79c6">new</span> Callable<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span>() {
+</span></span><span style="display:flex;"><span>                        <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">call</span>() <span style="color:#8be9fd;font-style:italic">throws</span> Exception {
+</span></span><span style="display:flex;"><span>                            System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;load2&#34;</span>); <span style="color:#6272a4">//加载数据线程执行标志</span>
+</span></span><span style="display:flex;"><span>                            Thread.<span style="color:#50fa7b">sleep</span>(1000); <span style="color:#6272a4">//模拟加载时间</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;auto load by Callable&#34;</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    });
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(<span style="color:#f1fa8c">&#34;thread2 &#34;</span> <span style="color:#ff79c6">+</span> value);
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff79c6">catch</span> (ExecutionException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#50fa7b">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }).<span style="color:#50fa7b">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码中有两个线程共享同一个Cache对象，两个线程同时调用get方法获取同一个key对应的记录。由于key对应的记录不存在，所以两个线程都在get方法处阻塞。此处在call方法中调用Thread.sleep(1000)模拟程序从外存加载数据的时间消耗。</p>
+<p>Guava可以保证当有多个线程同时访问Cache中的一个key时，如果key对应的记录不存在，Guava只会启动一个线程执行get方法中Callable参数对应的任务加载数据存到缓存。当加载完数据后，任何线程中的get方法都会获取到key对应的值。</p>
+<h2 id="统计信息">统计信息</h2>
+<p>可以对Cache的命中率、加载数据时间等信息进行统计。在构建Cache对象时，可以通过CacheBuilder的recordStats方法开启统计信息的开关。开关开启后Cache会自动对缓存的各种操作进行统计，调用Cache的stats方法可以查看统计后的信息。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        Cache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> cache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(3)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">recordStats</span>() <span style="color:#6272a4">//开启统计信息开关</span>
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>();
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>,<span style="color:#f1fa8c">&#34;value1&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>,<span style="color:#f1fa8c">&#34;value2&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>,<span style="color:#f1fa8c">&#34;value3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">put</span>(<span style="color:#f1fa8c">&#34;key4&#34;</span>,<span style="color:#f1fa8c">&#34;value4&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key4&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key5&#34;</span>);
+</span></span><span style="display:flex;"><span>        cache.<span style="color:#50fa7b">getIfPresent</span>(<span style="color:#f1fa8c">&#34;key6&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(cache.<span style="color:#50fa7b">stats</span>()); <span style="color:#6272a4">//获取统计信息</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这些统计信息对于调整缓存设置是至关重要的，在性能要求高的应用中应该密切关注这些数据</p>
+<h2 id="loadingcache">LoadingCache</h2>
+<p>LoadingCache是Cache的子接口，相比较于Cache，当从LoadingCache中读取一个指定key的记录时，如果该记录不存在，则LoadingCache可以自动执行加载数据到缓存的操作。LoadingCache接口的定义如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">LoadingCache</span><span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">extends</span> Cache<span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span>, Function<span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    V <span style="color:#50fa7b">get</span>(K key) <span style="color:#8be9fd;font-style:italic">throws</span> ExecutionException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    V <span style="color:#50fa7b">getUnchecked</span>(K key);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ImmutableMap<span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">getAll</span>(Iterable<span style="color:#ff79c6">&lt;?</span> <span style="color:#8be9fd;font-style:italic">extends</span> K<span style="color:#ff79c6">&gt;</span> keys) <span style="color:#8be9fd;font-style:italic">throws</span> ExecutionException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    V <span style="color:#50fa7b">apply</span>(K key);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">refresh</span>(K key);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    ConcurrentMap<span style="color:#ff79c6">&lt;</span>K, V<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">asMap</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>与构建Cache类型的对象类似，LoadingCache类型的对象也是通过CacheBuilder进行构建，不同的是，在调用CacheBuilder的build方法时，必须传递一个CacheLoader类型的参数，CacheLoader的load方法需要我们提供实现。当调用LoadingCache的get方法时，如果缓存不存在对应key的记录，则CacheLoader中的load方法会被自动调用从外存加载数据，load方法的返回值会作为key对应的value存储到LoadingCache中，并从get方法返回。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">StudyGuavaCache</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(String<span style="color:#ff79c6">[]</span> args) <span style="color:#8be9fd;font-style:italic">throws</span> ExecutionException {
+</span></span><span style="display:flex;"><span>        CacheLoader<span style="color:#ff79c6">&lt;</span>String, String<span style="color:#ff79c6">&gt;</span> loader <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> CacheLoader<span style="color:#ff79c6">&lt;</span>String, String<span style="color:#ff79c6">&gt;</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">load</span>(String key) <span style="color:#8be9fd;font-style:italic">throws</span> Exception {
+</span></span><span style="display:flex;"><span>                Thread.<span style="color:#50fa7b">sleep</span>(1000); <span style="color:#6272a4">//休眠1s，模拟加载数据</span>
+</span></span><span style="display:flex;"><span>                System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(key <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34; is loaded from a cacheLoader!&#34;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">return</span> key <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;&#39;s value&#34;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        LoadingCache<span style="color:#ff79c6">&lt;</span>String,String<span style="color:#ff79c6">&gt;</span> loadingCache <span style="color:#ff79c6">=</span> CacheBuilder.<span style="color:#50fa7b">newBuilder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">maximumSize</span>(3)
+</span></span><span style="display:flex;"><span>                .<span style="color:#50fa7b">build</span>(loader);<span style="color:#6272a4">//在构建时指定自动加载器</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        loadingCache.<span style="color:#50fa7b">get</span>(<span style="color:#f1fa8c">&#34;key1&#34;</span>);
+</span></span><span style="display:flex;"><span>        loadingCache.<span style="color:#50fa7b">get</span>(<span style="color:#f1fa8c">&#34;key2&#34;</span>);
+</span></span><span style="display:flex;"><span>        loadingCache.<span style="color:#50fa7b">get</span>(<span style="color:#f1fa8c">&#34;key3&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/zhao_evan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Programming Enthusiast, Game Player and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:phzhao7548@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="/img/WechatIMG52.png">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/bytewalking">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/blog" title="blog">
+                        blog
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+               
+            
+               
+                    <a href="/tags/github" title="github">
+                        github
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/hoopchina" title="hoopchina">
+                        hoopchina
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/istio" title="istio">
+                        istio
+                    </a>
+               
+            
+               
+                    <a href="/tags/java" title="java">
+                        java
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/kubernetes" title="kubernetes">
+                        kubernetes
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/mac" title="mac">
+                        mac
+                    </a>
+               
+            
+               
+                    <a href="/tags/microservice" title="microservice">
+                        microservice
+                    </a>
+               
+            
+               
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/python" title="python">
+                        python
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/security" title="security">
+                        security
+                    </a>
+               
+            
+               
+                    <a href="/tags/service-mesh" title="service mesh">
+                        service mesh
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/think" title="think">
+                        think
+                    </a>
+               
+            
+               
+                    <a href="/tags/think-deeply" title="think-deeply">
+                        think-deeply
+                    </a>
+               
+            
+               
+                    <a href="/tags/tips" title="tips">
+                        tips
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/vim" title="vim">
+                        vim
+                    </a>
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+            
+            <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+            
+            <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+            
+        </ul>
+    </section>
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>LAST POSTS</h5>
+        <ul>
+        
+            <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
+        
+            <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
+        
+            <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
+        
+            <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
+        
+            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
+        
+        </ul>
+    </section>
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

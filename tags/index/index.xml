@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Index on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/index/</link>
+    <description>Recent content in Index on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/index/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>通过expalin可以得到什么？</title>
+      <link>https://bytewalking.github.io/post/2019-08-02-mysql-explain-interpretation/</link>
+      <pubDate>Sat, 03 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-08-02-mysql-explain-interpretation/</guid>
+      <description>&lt;h2 id=&#34;通过expalin可以得到&#34;&gt;通过expalin可以得到&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;表的读取顺序&lt;/li&gt;&#xA;&lt;li&gt;表的读取操作的操作类型&lt;/li&gt;&#xA;&lt;li&gt;哪些索引可以使用&lt;/li&gt;&#xA;&lt;li&gt;哪些索引被实际使用&lt;/li&gt;&#xA;&lt;li&gt;表之间的引用&lt;/li&gt;&#xA;&lt;li&gt;每张表有多少行被优化器查询&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;如何调用expalin命令&#34;&gt;如何调用expalin命令&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;只需要在SELECT前面加上EXPLAIN即可，例如&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

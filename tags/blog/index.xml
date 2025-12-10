@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/blog/</link>
+    <description>Recent content in Blog on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 23 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>技术例会会议记录</title>
+      <link>https://bytewalking.github.io/post/2019-07-23-meeting-notes/</link>
+      <pubDate>Tue, 23 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-07-23-meeting-notes/</guid>
+      <description>&lt;p&gt;我其实就是想水一篇，反正也没人看。公司给来我一个参加技术大佬们周例会的机会，做了一些笔记分享一下&lt;/p&gt;&#xA;&lt;h2 id=&#34;9pm项目周会笔记19722&#34;&gt;9PM项目周会笔记19/7/22&lt;/h2&gt;&#xA;&lt;h1 id=&#34;第一部分故障分析&#34;&gt;第一部分:故障分析&lt;/h1&gt;&#xA;&lt;p&gt;对Q2的故障数据进行分析和总结，数据来源CMDB，分成三个部分进行分析&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How To Build A Personal Blog Site</title>
+      <link>https://bytewalking.github.io/post/2019-05-09-how-to-build-a-website-like-mine/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-05-09-how-to-build-a-website-like-mine/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/gohugoio/hugo#fetch-from-github&#34;&gt;Hugo&lt;/a&gt; is a static HTML and CSS website generator written in Go. It is optimized for speed, ease of use, and configurability. Hugo takes a directory with content and templates and renders them into a full HTML website.&lt;/p&gt;&#xA;&lt;h2 id=&#34;how-to-install&#34;&gt;How to Install&lt;/h2&gt;&#xA;&lt;h3 id=&#34;install-hugo-as-your-site-generator-binary-install&#34;&gt;Install Hugo as Your Site Generator (Binary Install)&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;Homebrew (macOS)&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;brew install hugo&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;Chocolatey (Windows)&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;choco install hugo -confirm&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Use the installation instructions in the &lt;a href=&#34;https://gohugo.io/getting-started/installing/&#34;&gt;Hugo documentation&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;build-and-install-the-binaries-from-source-advanced-install&#34;&gt;Build and Install the Binaries from Source (Advanced Install)&lt;/h3&gt;&#xA;&lt;p&gt;Prerequisite Tools:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How To Build A Personal Blog Site(中文版)</title>
+      <link>https://bytewalking.github.io/post/2019-05-09-how-to-build-a-website-like-mine-chinese/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-05-09-how-to-build-a-website-like-mine-chinese/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/gohugoio/hugo#fetch-from-github&#34;&gt;Hugo&lt;/a&gt; 是一款使用Go语言编写的静态语言生成器。它对构建速度，易用性和可配置性等方面进行了优化。Hugo的目录内包含content和templates等部分，并将它们打包呈现为一个完整的HTML网站&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java8 on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/java8/</link>
+    <description>Recent content in Java8 on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 31 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/java8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 8 Iterable.forEach() vs foreach loop</title>
+      <link>https://bytewalking.github.io/post/2019-07-31-java-8-foreach-vs-foreach-loop/</link>
+      <pubDate>Wed, 31 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-07-31-java-8-foreach-vs-foreach-loop/</guid>
+      <description>&lt;h1 id=&#34;java-8-iterableforeach-vs-foreach-loop&#34;&gt;Java 8 Iterable.forEach() vs foreach loop&lt;/h1&gt;&#xA;&lt;p&gt;Which of the following is better practice in Java 8?&lt;/p&gt;&#xA;&lt;p&gt;Java 8:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;joins.forEach(join -&amp;gt; mIrc.join(mSession, join));&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Java 7:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;for (String join : joins) {&#xA;    mIrc.join(mSession, join);&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I have lots of for loops that could be &amp;ldquo;simplified&amp;rdquo; with lambdas, but is there really any advantage of using them? Would it improve their performance and readability?&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ll also extend this question to longer methods. I know that you can&amp;rsquo;t return or break the parent function from a lambda and this should also be taken into consideration when comparing them, but is there anything else to be considered?&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

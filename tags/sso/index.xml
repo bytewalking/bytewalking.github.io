@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SSO on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/sso/</link>
+    <description>Recent content in SSO on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 May 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/sso/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>单点登录的原理和实现</title>
+      <link>https://bytewalking.github.io/post/2019-05-08-single-sign-on-design-and-implementation/</link>
+      <pubDate>Wed, 08 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-05-08-single-sign-on-design-and-implementation/</guid>
+      <description>&lt;h1 id=&#34;单系统登录机制&#34;&gt;单系统登录机制&lt;/h1&gt;&#xA;&lt;h2 id=&#34;http无状态协议&#34;&gt;http无状态协议&lt;/h2&gt;&#xA;&lt;p&gt;Web应用一般都是采用browser/server架构，使用http作为通信协议。http是无状态协议，浏览器的每一次请求，服务器都会独立处理，不与之前或之后的请求产生关联，这个过程用下图说明，三次请求/响应对之间没有任何联系&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

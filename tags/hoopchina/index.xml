@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hoopchina on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/hoopchina/</link>
+    <description>Recent content in Hoopchina on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/hoopchina/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2019年度总结</title>
+      <link>https://bytewalking.github.io/post/2019-12-29-2019-summarize/</link>
+      <pubDate>Sun, 29 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-12-29-2019-summarize/</guid>
+      <description>&lt;p&gt;光阴如白驹过隙，一转眼时间，已过去了半年时光，作为虎扑员工度过193天，作为虎扑用户度过了208天。曾经说出的豪言壮语还未兑现，错过的机会还未追回，2019就这样结束。这是毕业后的第一份工作，也是人生新阶段的开始，三观的可塑性还很高，所以要认真反思这一年的经历，对2020年的生活和工作很有指导意义。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>心中的小小英雄</title>
+      <link>https://bytewalking.github.io/post/2019-11-27-hello-hoopchina-hero/</link>
+      <pubDate>Wed, 27 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-11-27-hello-hoopchina-hero/</guid>
+      <description>&lt;h3 id=&#34;我为什么要写这篇博客&#34;&gt;我为什么要写这篇博客&lt;/h3&gt;&#xA;&lt;p&gt;前天看了《奇葩说》第六季第5期，辩题是“感兴趣的工作总是996，我该不该886”。我想到在embark的时候，下班时间一到，开发组的办公室立马就空无一人了。这样的工作也挺好，你能拥有更多思考的时间。缺点是，思考久了，人就不安分了。为了想象中的‘远大前程’，我便挥泪告别了‘无忧无虑’的生活。刚到虎扑时，我发现规定明明是6点下班，但大部分的人都在7点后才陆续离开，几天后才发现，原来7点有加班餐！暗叹资本家套路深的我便在每天7点准时下班了。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="通过expalin可以得到什么？" />
+    <meta property="og:title" content="通过expalin可以得到什么？" />
+    <meta property="twitter:title" content="通过expalin可以得到什么？" />
+    
+
+    
+    <meta name="description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2019-08-02-mysql-explain-interpretation/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>通过expalin可以得到什么？ | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2019-08-02-mysql-explain-interpretation/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note/">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Evan Blog </h1>
+                    
+		    <span class="subheading">The journey is the reward</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <h2 id="通过expalin可以得到">通过expalin可以得到</h2>
+<ul>
+<li>表的读取顺序</li>
+<li>表的读取操作的操作类型</li>
+<li>哪些索引可以使用</li>
+<li>哪些索引被实际使用</li>
+<li>表之间的引用</li>
+<li>每张表有多少行被优化器查询</li>
+</ul>
+<h2 id="如何调用expalin命令">如何调用expalin命令</h2>
+<ul>
+<li>
+<p>只需要在SELECT前面加上EXPLAIN即可，例如</p>
+<pre><code>  explain select surname,first_name form a,b where a.id=b.id 
+</code></pre>
+</li>
+<li>
+<p>在语句结尾(;之前)加上\G能够更清晰的查看</p>
+</li>
+<li>
+<p>需要说的是EXPLAIN<code>只对SELECT查询作解释</code>,INSERT,UPDATE,DELETE不会</p>
+</li>
+</ul>
+<h2 id="explain显示的列">Explain显示的列</h2>
+<h3 id="id">id</h3>
+<p>语句的执行顺序标识，如果在语句中没有子查询或联合,说明只有一个SELECT,于是这个列显示为1,否则内层的SELECT会顺序编号</p>
+<h3 id="select_type">select_type</h3>
+<p>显示了对应的查询是简单还是复杂SELECT，主要有以下几种查询类型</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">类型</th>
+          <th style="text-align: center">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">simple</td>
+          <td style="text-align: center">简单类型 语句中没有子查询或union</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">primary</td>
+          <td style="text-align: center">最外层的select ，不是主键 这是为更复杂的查询而创建的首要表(也就是最外层的表)。这个类型通常可以在DERIVED 和UNION 类型混合使用时见到。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">union</td>
+          <td style="text-align: center">union是在select 语句中第二个select语句后面所有的select，第一个select 为primary</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">这是UNION 语句其中的一个SQL 元素。</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">dependent subquery</td>
+          <td style="text-align: center">子查询中内层中第一个select语句 这个select-type 值是为使用子查询而定义的。下面的SQL语句提供了这个值： <code>mysql&gt; EXPLAIN SELECT p.* -&gt; FROM parent p -&gt; WHERE p.id NOT IN (SELECT c.parent_id FROM child c);</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">dependent  union</td>
+          <td style="text-align: center">子查询中union且为union中第二个select开始的后面所有select，依赖于外部的结果集。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">SUBQUERY</td>
+          <td style="text-align: center">子查询内层查询的第一个SELECT，结果不依赖于外部查询结果集。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">devived</td>
+          <td style="text-align: center">派生表的查询语句当一个表不是一个物理表时，那么就被叫做DERIVED。下面的SQL 语句给出了一个QEP 中DERIVED select-type 类型的示例：<code>mysql&gt; EXPLAIN SELECT MAX(id)-&gt; FROM (SELECT id FROM users WHERE first = 'west') c;</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">uncacheable subquery</td>
+          <td style="text-align: center">结果集无法缓存的子查询</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">union result</td>
+          <td style="text-align: center">union中合并的结果 这是一系列定义在UNION 语句中的表的返回结果。当select_type 为这个值时，经常可以看到table 的值是<code>&lt;unionN,M&gt;</code>， 这说明匹配的id 行是这个集合的一部分</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="table">table</h3>
+<ul>
+<li>显示对应行正在访问哪个表</li>
+<li>当FROM子句中有子查询或UNION时,table列是<code>&lt;derivedN&gt;</code>,其中N是id列对应的值</li>
+</ul>
+<h3 id="type">type</h3>
+<p>联合查询所使用的类型，type显示的是访问类型，是较为重要的一个指标，结果值从好到坏依次是：</p>
+<p><code>system &gt; const &gt; eq_ref &gt; ref &gt;fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt;index_subquery &gt; range &gt; index &gt; ALL</code></p>
+<p>一般来说，得保证查询至少达到range级别，最好能达到ref。
+这列很重要,显示了连接使用了哪种类别,有无使用索引。主要包括以下几种类型</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">类型</th>
+          <th style="text-align: center">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">all</td>
+          <td style="text-align: center">全表扫描，效果是最不理想的。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">const</td>
+          <td style="text-align: center">const是在where条件以常量作为查询条件，最多只会有一条记录匹配，由于是常量，实际上只须要读一次。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">eq_ref</td>
+          <td style="text-align: center">最多只会有一条匹配结果，一般是通过主键或唯一键索引来访问。一般会出现在连接查询的语句中。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">fulltext</td>
+          <td style="text-align: center">进行全文索引检索。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">index</td>
+          <td style="text-align: center">全索引扫描。MySQL在扫描表时按索引次序进行而不是行。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">index_merge</td>
+          <td style="text-align: center">查询中同时使用两个（或更多）索引，然后对索引结果进行合并（merge），再读取表数据。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">index_subquery</td>
+          <td style="text-align: center">子查询中的返回结果字段组合是一个索引（或索引组合），但不是一个主键或唯一索引。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">rang</td>
+          <td style="text-align: center">索引范围扫描。一个有限制的索引扫描,它开始于索引里的某一点,返回匹配这个值域的行(显而易见的范围扫描.即带有BETWEEN或在WHERE子句中带有&gt;的查询,当MySQL使用索引去查找一系列值的时候,如IN()和OR列表，也为显示的范围扫描)</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ref</td>
+          <td style="text-align: center">也叫索引查找,他返回所有匹配某单个值的行,它可能会找到多个符合条件行。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ref_or_null</td>
+          <td style="text-align: center">与ref的唯一区别就是在使用索引引用的查询之外再增加一个空值的查询。</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">system</td>
+          <td style="text-align: center">系统表，表中只有一行数据；</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">unique_subquery</td>
+          <td style="text-align: center">子查询中的返回结果字段组合是主键或唯一约束。</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="possible_keys">possible_keys</h3>
+<p>这一列显示了查询可以使用哪些索引,是基于查询访问的列和使用的比较操作符来判断的
+如果没有任何索引可以使用，就会显示成null</p>
+<h3 id="key">key</h3>
+<p>显示了MySQL决定采用哪个索引来优化对该表的访问</p>
+<h3 id="key_len">key_len</h3>
+<ul>
+<li>key_len列显示mysql决定使用的键长度，如果键是null，则长度为null</li>
+<li>显示MySQL在索引里使用的字节数.举个例子就是在查询中使用到了主键,而主键的数据类型为INT,则为4,SMALLINT则为2</li>
+<li>使用的索引长度，一般越短越好</li>
+</ul>
+<p>key_len 列定义了用于SQL 语句的连接条件的键的长度。此列值对于确认索引的有效性以及多列索引中用到的列的数目很重要。
+此列的一些示例值如下所示：  此列的一些示例值如下所示：</p>
+<pre><code>key_len: 4 // INT NOT NULL
+key_len: 5 // INT NULL
+key_len: 30 // CHAR(30) NOT NULL
+key_len: 32 // VARCHAR(30) NOT NULL
+key_len: 92 // VARCHAR(30) NULL CHARSET=utf8
+</code></pre>
+<p>从这些示例中可以看出，是否可以为空、可变长度的列以及key_len 列的值只和用在连接和WHERE 条件中的索引的列 有关。索引中的其他列会在ORDER BY 或者GROUP BY 语句中被用到。下面这个来自于著名的开源博客软件WordPress 的表展示了 如何以最佳方式使用带有定义好的表索引的SQL 语句：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff79c6">CREATE</span> <span style="color:#ff79c6">TABLE</span> <span style="color:#ff79c6">`</span>wp_posts<span style="color:#ff79c6">`</span> (  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>ID<span style="color:#ff79c6">`</span> <span style="color:#8be9fd;font-style:italic">bigint</span>(<span style="color:#bd93f9">20</span>) unsigned <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> AUTO_INCREMENT,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>post_date<span style="color:#ff79c6">`</span> datetime <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> <span style="color:#ff79c6">DEFAULT</span> <span style="color:#f1fa8c">&#39;0000-00-00 00:00:00&#39;</span>,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>post_status<span style="color:#ff79c6">`</span> <span style="color:#8be9fd;font-style:italic">varchar</span>(<span style="color:#bd93f9">20</span>) <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> <span style="color:#ff79c6">DEFAULT</span> <span style="color:#f1fa8c">&#39;publish&#39;</span> ,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>post_type<span style="color:#ff79c6">`</span> <span style="color:#8be9fd;font-style:italic">varchar</span>(<span style="color:#bd93f9">20</span>) <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> <span style="color:#ff79c6">DEFAULT</span> <span style="color:#f1fa8c">&#39;post&#39;</span>,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">PRIMARY</span> <span style="color:#ff79c6">KEY</span> (<span style="color:#ff79c6">`</span>ID<span style="color:#ff79c6">`</span>),  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">KEY</span> <span style="color:#ff79c6">`</span>type_status_date<span style="color:#ff79c6">`</span>(<span style="color:#ff79c6">`</span>post_type<span style="color:#ff79c6">`</span>,<span style="color:#ff79c6">`</span>post_status<span style="color:#ff79c6">`</span>,<span style="color:#ff79c6">`</span>post_date<span style="color:#ff79c6">`</span>,<span style="color:#ff79c6">`</span>ID<span style="color:#ff79c6">`</span>)  
+</span></span><span style="display:flex;"><span>) <span style="color:#ff79c6">DEFAULT</span> CHARSET<span style="color:#ff79c6">=</span>utf8  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">CREATE</span> <span style="color:#ff79c6">TABLE</span> <span style="color:#ff79c6">`</span>wp_posts<span style="color:#ff79c6">`</span> (  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>ID<span style="color:#ff79c6">`</span> <span style="color:#8be9fd;font-style:italic">bigint</span>(<span style="color:#bd93f9">20</span>) unsigned <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> AUTO_INCREMENT,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>post_date<span style="color:#ff79c6">`</span> datetime <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> <span style="color:#ff79c6">DEFAULT</span> <span style="color:#f1fa8c">&#39;0000-00-00 00:00:00&#39;</span>,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>post_status<span style="color:#ff79c6">`</span> <span style="color:#8be9fd;font-style:italic">varchar</span>(<span style="color:#bd93f9">20</span>) <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> <span style="color:#ff79c6">DEFAULT</span> <span style="color:#f1fa8c">&#39;publish&#39;</span> ,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">`</span>post_type<span style="color:#ff79c6">`</span> <span style="color:#8be9fd;font-style:italic">varchar</span>(<span style="color:#bd93f9">20</span>) <span style="color:#ff79c6">NOT</span> <span style="color:#ff79c6">NULL</span> <span style="color:#ff79c6">DEFAULT</span> <span style="color:#f1fa8c">&#39;post&#39;</span>,  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">PRIMARY</span> <span style="color:#ff79c6">KEY</span> (<span style="color:#ff79c6">`</span>ID<span style="color:#ff79c6">`</span>),  
+</span></span><span style="display:flex;"><span> <span style="color:#ff79c6">KEY</span> <span style="color:#ff79c6">`</span>type_status_date<span style="color:#ff79c6">`</span>(<span style="color:#ff79c6">`</span>post_type<span style="color:#ff79c6">`</span>,<span style="color:#ff79c6">`</span>post_status<span style="color:#ff79c6">`</span>,<span style="color:#ff79c6">`</span>post_date<span style="color:#ff79c6">`</span>,<span style="color:#ff79c6">`</span>ID<span style="color:#ff79c6">`</span>)  
+</span></span><span style="display:flex;"><span>) <span style="color:#ff79c6">DEFAULT</span> CHARSET<span style="color:#ff79c6">=</span>utf8  
+</span></span></code></pre></div><p>这个表的索引包括post_type、post_status、post_date 以及ID列。下面是一个演示索引列用法的SQL 查询： EXPLAIN SELECT ID, post_title FROM wp_posts WHERE post_type=&lsquo;post&rsquo; AND post_date &gt; &lsquo;2010-06-01&rsquo;;  这个查询的QEP 返回的key_len 是62。这说明只有post_type列上的索引用到了(因为(20×3)+2=62)。尽管查询在WHERE 语句 中使用了post_type 和post_date 列，但只有post_type 部分被用到了。其他索引没有被使用的原因是MySQL 只能使用定义索引的 最左边部分。为了更好地利用这个索引，可以修改这个查询来调整索引的列。请看下面的示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">EXPLAIN</span> <span style="color:#ff79c6">SELECT</span> ID, post_title  
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">FROM</span> wp_posts  
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">WHERE</span> post_type<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;post&#39;</span>  
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">AND</span> post_status<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;publish&#39;</span>  
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">AND</span> post_date <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#39;2010-06-01&#39;</span>;  
+</span></span></code></pre></div><p>在SELECT查询的添加一个post_status 列的限制条件后，QEP显示key_len 的值为132，这意味着post_type、post_status、post_date 三列(62+62+8，(20×3)+2，(20×3)+2，8)都被用到了。此外，这个索引的主码列ID 的定义是使用MyISAM 存储索 引的遗留痕迹。当使用InnoDB 存储引擎时，在非主码索引中包含主码列是多余的，这可以从key_len 的用法看出来。 相关的QEP 列还包括带有Using index 值的Extra 列。</p>
+<h3 id="ref">Ref</h3>
+<p>显示了之前的表在key列记录的索引中查询值所用到的列或常量</p>
+<h3 id="rows">rows</h3>
+<p>显示的是MySQL为了找到所需的值而要读取的行数.</p>
+<h3 id="extra">extra</h3>
+<p>在此显示的是在其他列不适合显示的额外信息,主要可能会是以下内容：</p>
+<ul>
+<li><strong>Distinct</strong></li>
+</ul>
+<p>查找distinct 值，当mysql找到了第一条匹配的结果时，将停止该值的查询，转为后面其他值查询</p>
+<ul>
+<li><strong>Full scan on NULL key</strong></li>
+</ul>
+<p>子查询中的一种优化方式，主要在遇到无法通过索引访问null值的使用</p>
+<ul>
+<li><strong>Using index</strong></li>
+</ul>
+<p>表优化器只需要通过访问索引就可以获取到需要的数据</p>
+<ul>
+<li><strong>Using where</strong></li>
+</ul>
+<p>表示优化器需要通过索引回表查询数据(需要通过访问数据块获取结果集)</p>
+<ul>
+<li><strong>Using temporary</strong></li>
+</ul>
+<p>意味着MySQL在对查询结果排序时会用到一个临时表.
+这个值表示使用了内部临时(基于内存的)表。一个查询可能 用到多个临时表。有很多原因都会导致MySQL 在执行查询期间 创建临时表。两个常见的原因是在来自不同表的列上使用了 DISTINCT，或者使用了不同的ORDER BY 和GROUP BY 列。 想了解更多内容可以访问<a href="http://forge.mysql.com/wiki/Overview_of_query_execution_and_use_of_temp_tables">这里</a>。 可以强制指定一个临时表使用基于磁盘的MyISAM 存储引 擎。这样做的原因主要有两个：</p>
+<ul>
+<li>
+<p>内部临时表占用的空间超过min(tmp_table_size，max_ heap_table_size)系统变量的限制</p>
+</li>
+<li>
+<p>使用了TEXT/BLOB 列</p>
+</li>
+<li>
+<p><strong>Using filesort</strong></p>
+</li>
+</ul>
+<p>看到这个的时候，查询就需要优化了。意味着MySQL会对结果使用一个外部索引排序,而不是按索引次序从表里读出来.
+这是ORDER BY 语句的结果。这可能是一个CPU 密集型的过程。 可以通过选择合适的索引来改进性能，用索引来为查询结果排序。</p>
+<ul>
+<li><strong>Using join buffer</strong></li>
+</ul>
+<p>这个值强调了在获取连接条件时没有使用索引，并且需要连接缓冲区来存储中间结果。 如果出现了这个值，那应该注意，根据查询的具体情况可能需要添加索引来改进性能。
+<a href="https://my.oschina.net/xinxingegeya/blog/495897">这篇博客</a>中有Using join buffer的详细说明
+<a href="http://blog.csdn.net/tonyxf121/article/details/7796657">这篇博客</a>中有join的详细说明</p>
+<ul>
+<li><strong>Impossible where</strong></li>
+</ul>
+<p>这个值强调了where 语句会导致没有符合条件的行。请看下面的示例： <code>mysql&gt; EXPLAIN SELECT * FROM user WHERE 1=2;</code></p>
+<ul>
+<li><strong>Select tables optimized away</strong></li>
+</ul>
+<p>这个值意味着仅通过使用索引，优化器可能仅从聚合函数结果中返回一行。</p>
+<ul>
+<li><strong>Index merges</strong></li>
+</ul>
+<p>当MySQL 决定要在一个给定的表上使用超过一个索引的时候，就会出现以下格式中的一个，详细说明使用的索引以及合并的类型。</p>
+<ul>
+<li>
+<p>Using sort_union(&hellip;)</p>
+</li>
+<li>
+<p>Using union(&hellip;)</p>
+</li>
+<li>
+<p>Using intersect(&hellip;)</p>
+</li>
+<li>
+<p><strong>Using where, Using index &hellip;..</strong></p>
+</li>
+</ul>
+<p>说明该查询有部分数据需要通过回表方式获取有部分数据可以直接通过索引获取。</p>
+
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/zhao_evan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Programming Enthusiast, Game Player and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:phzhao7548@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="/img/WechatIMG52.png">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/bytewalking">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/blog" title="blog">
+                        blog
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+               
+            
+               
+                    <a href="/tags/github" title="github">
+                        github
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/hoopchina" title="hoopchina">
+                        hoopchina
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/istio" title="istio">
+                        istio
+                    </a>
+               
+            
+               
+                    <a href="/tags/java" title="java">
+                        java
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/kubernetes" title="kubernetes">
+                        kubernetes
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/mac" title="mac">
+                        mac
+                    </a>
+               
+            
+               
+                    <a href="/tags/microservice" title="microservice">
+                        microservice
+                    </a>
+               
+            
+               
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/python" title="python">
+                        python
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/security" title="security">
+                        security
+                    </a>
+               
+            
+               
+                    <a href="/tags/service-mesh" title="service mesh">
+                        service mesh
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/think" title="think">
+                        think
+                    </a>
+               
+            
+               
+                    <a href="/tags/think-deeply" title="think-deeply">
+                        think-deeply
+                    </a>
+               
+            
+               
+                    <a href="/tags/tips" title="tips">
+                        tips
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/vim" title="vim">
+                        vim
+                    </a>
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+            
+            <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+            
+            <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+            
+        </ul>
+    </section>
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>LAST POSTS</h5>
+        <ul>
+        
+            <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
+        
+            <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
+        
+            <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
+        
+            <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
+        
+            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
+        
+        </ul>
+    </section>
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

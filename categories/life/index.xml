@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life on Evan Blog</title>
+    <link>https://bytewalking.github.io/categories/life/</link>
+    <description>Recent content in Life on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/categories/life/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2019年度总结</title>
+      <link>https://bytewalking.github.io/post/2019-12-29-2019-summarize/</link>
+      <pubDate>Sun, 29 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-12-29-2019-summarize/</guid>
+      <description>&lt;p&gt;光阴如白驹过隙，一转眼时间，已过去了半年时光，作为虎扑员工度过193天，作为虎扑用户度过了208天。曾经说出的豪言壮语还未兑现，错过的机会还未追回，2019就这样结束。这是毕业后的第一份工作，也是人生新阶段的开始，三观的可塑性还很高，所以要认真反思这一年的经历，对2020年的生活和工作很有指导意义。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>心中的小小英雄</title>
+      <link>https://bytewalking.github.io/post/2019-11-27-hello-hoopchina-hero/</link>
+      <pubDate>Wed, 27 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-11-27-hello-hoopchina-hero/</guid>
+      <description>&lt;h3 id=&#34;我为什么要写这篇博客&#34;&gt;我为什么要写这篇博客&lt;/h3&gt;&#xA;&lt;p&gt;前天看了《奇葩说》第六季第5期，辩题是“感兴趣的工作总是996，我该不该886”。我想到在embark的时候，下班时间一到，开发组的办公室立马就空无一人了。这样的工作也挺好，你能拥有更多思考的时间。缺点是，思考久了，人就不安分了。为了想象中的‘远大前程’，我便挥泪告别了‘无忧无虑’的生活。刚到虎扑时，我发现规定明明是6点下班，但大部分的人都在7点后才陆续离开，几天后才发现，原来7点有加班餐！暗叹资本家套路深的我便在每天7点准时下班了。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>创造者和他们的工具——我的利器</title>
+      <link>https://bytewalking.github.io/post/2019-4-25-creators-and-their-tools/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-4-25-creators-and-their-tools/</guid>
+      <description>&lt;p&gt;在网上翻阅大佬们的博客时发现了这个利器社群计划,正好最近自己也在写博客,就把这些问题也记录下来吧&lt;/p&gt;&#xA;&lt;h2 id=&#34;介绍一下你自己和所做的工作&#34;&gt;介绍一下你自己和所做的工作。&lt;/h2&gt;&#xA;&lt;p&gt;我是一名即将毕业，但是已经入行半年多的程序员,目前在一家留学教育公司做web开发工作&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recent Sentiment</title>
+      <link>https://bytewalking.github.io/post/2019-5-5-recent-sentiment/</link>
+      <pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-5-5-recent-sentiment/</guid>
+      <description>&lt;p&gt;最近一段时间经常失眠，焦虑。有时会有一种生活失控的感觉。这些困惑开始促使我思考我到底要做什么才能改变我的现状。&lt;/p&gt;&#xA;&lt;p&gt;我是个爱瞎折腾的人，什么事情都想自己去试一下，但是又比较倔强，不到自己山穷水尽、黔驴技穷的时候，根本不会去请教别人。这个缺点让我很吃亏。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

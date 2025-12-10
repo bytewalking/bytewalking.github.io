@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Linux 常用命令" />
+    <meta property="og:title" content="Linux 常用命令" />
+    <meta property="twitter:title" content="Linux 常用命令" />
+    
+
+    
+    <meta name="description" content="不断更新中">
+    <meta property="og:description" content="不断更新中" />
+    <meta property="twitter:description" content="不断更新中" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2019-06-30-linux-tips/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Linux 常用命令 | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2019-06-30-linux-tips/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note/">note</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Evan Blog </h1>
+                    
+		    <span class="subheading">The journey is the reward</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <h2 id="环境变量">环境变量</h2>
+<p>修改当前用户</p>
+<pre><code>vim ~/.bashrc
+</code></pre>
+<p>例：设置java环境变量</p>
+<pre tabindex="0"><code>#set oracle jdk environment
+export JAVA8=/usr/lib/jvm/jdk1.8.0_191
+export JAVA7=/usr/lib/jvm/jdk1.7.0_80
+export JAVA_HOME=${JAVA7}
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+export PATH=/usr/appengine/appengine-java-sdk-1.9.66//bin:$PATH
+export PATH=/usr/apache-ant-1.9.13//bin:$PATH
+export PS1=&#34;\[\e[32m\]\w\[\e[m\]\[\e[32m\] &gt;\[\e[m\] &#34;
+</code></pre><p>使环境变量马上生效：</p>
+<pre><code>source ~/.bashrc
+</code></pre>
+<p>用于所有用户：</p>
+<pre><code>sudo vim /etc/profile
+source /etc/profile
+</code></pre>
+<p>测试当前环境变量：</p>
+<pre><code>echo $PATH 或 env
+</code></pre>
+<h2 id="解压">解压</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">类型</th>
+          <th style="text-align: center">解包命令</th>
+          <th style="text-align: center">打包/压缩命令</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">tar</td>
+          <td style="text-align: center">tar xvf</td>
+          <td style="text-align: center">tar cvf</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">gz</td>
+          <td style="text-align: center">gunzip</td>
+          <td style="text-align: center">gzip -d</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">tar.gz</td>
+          <td style="text-align: center">tar zxvf</td>
+          <td style="text-align: center">tar zcvf</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">zip</td>
+          <td style="text-align: center">unzip</td>
+          <td style="text-align: center">zip</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">rar</td>
+          <td style="text-align: center">rar x</td>
+          <td style="text-align: center">rar a</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>linux下unzip的乱码问题</strong>
+unar方法
+这个工具会自动检测文件的编码，也可以通过-e来指定</p>
+<pre><code>sudo apt install unar
+unar your-zip
+</code></pre>
+<h2 id="文件管理">文件管理</h2>
+<p>文件查看</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">命令</th>
+          <th style="text-align: center">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">ls -l</td>
+          <td style="text-align: center">列出文件列表</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ls -a</td>
+          <td style="text-align: center">浏览隐藏文件</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ls -lh</td>
+          <td style="text-align: center">以易读方式显示大小</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ls -F</td>
+          <td style="text-align: center">列出文件和目录</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ls -R</td>
+          <td style="text-align: center">递归出子目录</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ls -ltr</td>
+          <td style="text-align: center">以修改时间排序</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">ls -ls</td>
+          <td style="text-align: center">以文件大小排序</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">复制：</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<pre><code>cp  [options] &lt;source file or directory&gt; &lt;target file or directory&gt;
+</code></pre>
+<p>options选项</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">options</th>
+          <th style="text-align: center">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">-a</td>
+          <td style="text-align: center">保留链接和文件属性，递归拷贝目录，相当于下面的d、p、r三个选项组合</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-d</td>
+          <td style="text-align: center">拷贝时保留链接</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-f</td>
+          <td style="text-align: center">删除已经存在目标文件而不提示</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-i</td>
+          <td style="text-align: center">覆盖目标文件前将给出确认提示，属交互式拷贝</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-p</td>
+          <td style="text-align: center">复制源文件内容后，还将把其修改时间和访问权限也复制到新文件中</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-r</td>
+          <td style="text-align: center">若源文件是一目录文件，此时cp将递归复制该目录下所有的子目录和文件</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-l</td>
+          <td style="text-align: center">不作拷贝，只是链接文件</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-s</td>
+          <td style="text-align: center">复制成符号连结文件 (symbolic link)，亦即『快捷方式』档案</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-u</td>
+          <td style="text-align: center">若 destination 比 source 旧才更新 destination</td>
+      </tr>
+  </tbody>
+</table>
+<p>剪切：</p>
+<pre><code>mv 剪切
+</code></pre>
+<p>删除：</p>
+<pre><code>rm 删除
+rmdir
+# 强制删除
+rm -rf
+</code></pre>
+<h2 id="文件搜索">文件搜索</h2>
+<h3 id="语法">语法</h3>
+<p>find path -option [ -print ] [ -exec -ok command ] {} ;
+<strong>参数说明 :</strong>
+find 根据下列规则判断 path 和 expression，在命令列上第一个 - ( ) , ! 之前的部份为 path，之后的是 expression。如果 path 是空字串则使用目前路径，如果 expression 是空字串则使用 -print 为预设 expression。</p>
+<p>expression 中可使用的选项有二三十个之多，在此只介绍最常用的部份。</p>
+<p>-mount, -xdev : 只检查和指定目录在同一个文件系统下的文件，避免列出其它文件系统中的文件</p>
+<p>-amin n : 在过去 n 分钟内被读取过</p>
+<p>-anewer file : 比文件 file 更晚被读取过的文件</p>
+<p>-atime n : 在过去n天内被读取过的文件</p>
+<p>-cmin n : 在过去 n 分钟内被修改过</p>
+<p>-cnewer file :比文件 file 更新的文件</p>
+<p>-ctime n : 在过去n天内被修改过的文件</p>
+<p>-empty : 空的文件-gid n or -group name : gid 是 n 或是 group 名称是 name</p>
+<p>-ipath p, -path p : 路径名称符合 p 的文件，ipath 会忽略大小写</p>
+<p>-name name, -iname name : 文件名称符合 name 的文件。iname 会忽略大小写</p>
+<p>-size n : 文件大小 是 n 单位，b 代表 512 位元组的区块，c 表示字元数，k 表示 kilo bytes，w 是二个位元组。-type c : 文件类型是 c 的文件。</p>
+<p>d: 目录</p>
+<p>c: 字型装置文件</p>
+<p>b: 区块装置文件</p>
+<p>p: 具名贮列</p>
+<p>f: 一般文件</p>
+<p>l: 符号连结</p>
+<p>s: socket</p>
+<p>-pid n : process id 是 n 的文件</p>
+<p>你可以使用 ( ) 将运算式分隔，并使用下列运算。</p>
+<p>exp1 -and exp2</p>
+<p>! expr</p>
+<p>-not expr</p>
+<p>exp1 -or exp2</p>
+<p>exp1, exp2</p>
+<p>实例
+将目前目录及其子目录下所有延伸档名是 c 的文件列出来。</p>
+<pre><code># find . -name &quot;*.c&quot;
+</code></pre>
+<p>将目前目录其其下子目录中所有一般文件列出</p>
+<pre><code># find . -type f
+</code></pre>
+<p>将目前目录及其子目录下所有最近 20 天内更新过的文件列出</p>
+<pre><code># find . -ctime -20
+</code></pre>
+<p>查找/var/log目录中更改时间在7日以前的普通文件，并在删除之前询问它们：</p>
+<pre><code># find /var/log -type f -mtime +7 -ok rm {} \;
+</code></pre>
+<p>查找前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件：</p>
+<pre><code># find . -type f -perm 644 -exec ls -l {} \;
+</code></pre>
+<p>为了查找系统中所有文件长度为0的普通文件，并列出它们的完整路径：</p>
+<pre><code># find / -type f -size 0 -exec ls -l {} \;
+</code></pre>
+<h2 id="权限管理">权限管理</h2>
+<p><strong>chmod -（代表类型） xxx（所有者） xxx（用户组） xxx（其它用户）</strong>
+其他参数说明：</p>
+<ul>
+<li>c : 若该文件权限确实已经更改，才显示其更改动作</li>
+<li>-f : 若该文件权限无法被更改也不要显示错误讯息</li>
+<li>-v : 显示权限变更的详细资料</li>
+<li>-R : 对目前目录下的所有文件与子目录进行相同的权限变更(即以递回的方式逐个变更)</li>
+<li>&ndash;help : 显示辅助说明</li>
+<li>&ndash;version : 显示版本</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">命令</th>
+          <th style="text-align: center">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">chmod 600</td>
+          <td style="text-align: center">只有<strong>所有者</strong>有<strong>读写</strong>权限</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">chmod 644</td>
+          <td style="text-align: center"><strong>所有者</strong>有<strong>读写</strong>权限，<strong>组用户</strong>只有<strong>读</strong>权限</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">chmod 700</td>
+          <td style="text-align: center">只有<strong>所有者</strong>有<strong>读写</strong>和<strong>执行</strong>权限</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">chmod 666</td>
+          <td style="text-align: center"><strong>每个人</strong>有<strong>读写</strong>权限</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">chmod 777</td>
+          <td style="text-align: center"><strong>每个人</strong>有<strong>读写</strong>和<strong>执行</strong>权限</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="进程管理">进程管理</h2>
+<p>查看进程号：</p>
+<pre><code>lsof -i:9999
+</code></pre>
+<p>关闭进程：</p>
+<pre><code>kill -2 785[进程号]
+</code></pre>
+<h2 id="安装和卸载">安装和卸载</h2>
+<p>deb文件
+通过deb包安装软件：</p>
+<pre><code>sudo dpkg -i package_file.deb
+</code></pre>
+<p>卸载:</p>
+<pre><code>sudo dpkg -r package_name
+</code></pre>
+<p>注意，卸载时候是package_file.deb对应的package name
+查找：
+若不知道package name，可以通过</p>
+<pre><code>dpkg -l
+</code></pre>
+<p>若要查找对应的package，可以加通配符，如查找包含fox的package</p>
+<pre><code>dpkg -l  *fox*即可
+</code></pre>
+<h2 id="磁盘管理">磁盘管理</h2>
+<ul>
+<li>df：列出文件系统的整体磁盘使用量</li>
+<li>du：检查磁盘空间使用量</li>
+<li>fdisk：用于磁盘分区</li>
+</ul>
+<p><strong>df</strong>
+检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息
+语法：</p>
+<pre><code>df [-ahikHTm] [目录或文件名]
+</code></pre>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">参数</th>
+          <th style="text-align: center">选项</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">-a</td>
+          <td style="text-align: center">列出所有的文件系统，包括系统特有的 /proc 等文件系统</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-k</td>
+          <td style="text-align: center">以 KBytes 的容量显示各文件系统</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-m</td>
+          <td style="text-align: center">以 MBytes 的容量显示各文件系统</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-h</td>
+          <td style="text-align: center">以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-H</td>
+          <td style="text-align: center">以 M=1000K 取代 M=1024K 的进位方式</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-T</td>
+          <td style="text-align: center">显示文件系统类型, 连同该 partition 的 filesystem 名称 (例如 ext3) 也列出</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">-i</td>
+          <td style="text-align: center">不用硬盘容量，而以 inode 的数量来显示</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="网络管理">网络管理</h2>
+<p>ubuntu设置静态ip以后忘记设置dns，ping的时候报错：Name or service not known
+添加dns即可</p>
+<pre tabindex="0"><code>vi /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+</code></pre><h2 id="会话管理">会话管理</h2>
+<p>Screen是一款由GNU计划开发的用于命令行终端切换的自由软件。用户可以通过该软件同时连接多个本地或远程的命令行会话，并在其间自由切换。GNU Screen可以看作是窗口管理器的命令行界面版本。它提供了统一的管理多个会话的界面和相应的功能。</p>
+<h3 id="语法-1">语法</h3>
+<pre tabindex="0"><code>screen [-AmRvx -ls -wipe][-d &lt;作业名称&gt;][-h &lt;行数&gt;][-r &lt;作业名称&gt;][-s ][-S &lt;作业名称&gt;]
+</code></pre><h3 id="选项">选项</h3>
+<pre tabindex="0"><code>-A 　将所有的视窗都调整为目前终端机的大小。
+-d &lt;作业名称&gt; 　将指定的screen作业离线。
+-h &lt;行数&gt; 　指定视窗的缓冲区行数。
+-m 　即使目前已在作业中的screen作业，仍强制建立新的screen作业。
+-r &lt;作业名称&gt; 　恢复离线的screen作业。
+-R 　先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。
+-s 　指定建立新视窗时，所要执行的shell。
+-S &lt;作业名称&gt; 　指定screen作业的名称。
+-v 　显示版本信息。
+-x 　恢复之前离线的screen作业。
+-ls或--list 　显示目前所有的screen作业。
+-wipe 　检查目前所有的screen作业，并删除已经无法使用的screen作业。
+</code></pre><h3 id="常用screen参数">常用screen参数</h3>
+<pre tabindex="0"><code>screen -S yourname -&gt; 新建一个叫yourname的session
+screen -ls -&gt; 列出当前所有的session
+screen -r yourname -&gt; 回到yourname这个session
+screen -d yourname -&gt; 远程detach某个session
+screen -d -r yourname -&gt; 结束当前session并回到yourname这个session
+</code></pre>
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/zhao_evan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Programming Enthusiast, Game Player and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:phzhao7548@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="/img/WechatIMG52.png">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/bytewalking">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/blog" title="blog">
+                        blog
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+               
+            
+               
+                    <a href="/tags/github" title="github">
+                        github
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/hoopchina" title="hoopchina">
+                        hoopchina
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/istio" title="istio">
+                        istio
+                    </a>
+               
+            
+               
+                    <a href="/tags/java" title="java">
+                        java
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/kubernetes" title="kubernetes">
+                        kubernetes
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/mac" title="mac">
+                        mac
+                    </a>
+               
+            
+               
+                    <a href="/tags/microservice" title="microservice">
+                        microservice
+                    </a>
+               
+            
+               
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/python" title="python">
+                        python
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/security" title="security">
+                        security
+                    </a>
+               
+            
+               
+                    <a href="/tags/service-mesh" title="service mesh">
+                        service mesh
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/think" title="think">
+                        think
+                    </a>
+               
+            
+               
+                    <a href="/tags/think-deeply" title="think-deeply">
+                        think-deeply
+                    </a>
+               
+            
+               
+                    <a href="/tags/tips" title="tips">
+                        tips
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/vim" title="vim">
+                        vim
+                    </a>
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+            
+            <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+            
+            <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+            
+        </ul>
+    </section>
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>LAST POSTS</h5>
+        <ul>
+        
+            <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
+        
+            <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
+        
+            <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
+        
+            <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
+        
+            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
+        
+        </ul>
+    </section>
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

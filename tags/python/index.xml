@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/python/</link>
+    <description>Recent content in Python on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于Docker容器的算法模型部署</title>
+      <link>https://bytewalking.github.io/post/2020-02-06-docker-and-model-deployment/</link>
+      <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2020-02-06-docker-and-model-deployment/</guid>
+      <description>&lt;h3 id=&#34;技术选型背景&#34;&gt;技术选型背景&lt;/h3&gt;&#xA;&lt;p&gt;模型开发是算法工程师的工作日常，模型算法的效果也决定着业务场景的上限，但是模型要发挥其作用，必须投入到实际生产场景，目前互联网环境下的生产场景主要是针对不同用户需求下的定制化业务服务，而模型要在业务场景下发挥它的价值就需要嵌入到业务服务当中，在这个过程中会面临以下几个问题：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>单点登录的原理和实现</title>
+      <link>https://bytewalking.github.io/post/2019-05-08-single-sign-on-design-and-implementation/</link>
+      <pubDate>Wed, 08 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-05-08-single-sign-on-design-and-implementation/</guid>
+      <description>&lt;h1 id=&#34;单系统登录机制&#34;&gt;单系统登录机制&lt;/h1&gt;&#xA;&lt;h2 id=&#34;http无状态协议&#34;&gt;http无状态协议&lt;/h2&gt;&#xA;&lt;p&gt;Web应用一般都是采用browser/server架构，使用http作为通信协议。http是无状态协议，浏览器的每一次请求，服务器都会独立处理，不与之前或之后的请求产生关联，这个过程用下图说明，三次请求/响应对之间没有任何联系&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

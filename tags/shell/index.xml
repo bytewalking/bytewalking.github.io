@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shell on Evan Blog</title>
+    <link>https://bytewalking.github.io/tags/shell/</link>
+    <description>Recent content in Shell on Evan Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bytewalking.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shell指令速查</title>
+      <link>https://bytewalking.github.io/post/2019-06-30-shell-tips/</link>
+      <pubDate>Mon, 29 Apr 2019 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2019-06-30-shell-tips/</guid>
+      <description>&lt;h2 id=&#34;shell变量&#34;&gt;Shell变量&lt;/h2&gt;&#xA;&lt;p&gt;定义变量时，变量名不加美元符号（$，PHP语言中变量需要），如：&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt; your_name=&amp;quot;runoob.com&amp;quot;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;注意，变量名和等号之间不能有空格，这可能和你熟悉的所有编程语言都不一样。同时，变量名的命名须遵循如下规则：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
