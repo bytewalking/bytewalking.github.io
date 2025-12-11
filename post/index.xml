@@ -16,11 +16,18 @@
       <description>&lt;h2 id=&#34;揭开幕布的一束光&#34;&gt;揭开幕布的一束光&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;最近在酝酿一个想法：如果我将自己的想法和周记写成文章，发到朋友圈的流量池中，会对我产生什么样的影响？&lt;/p&gt;&#xA;&lt;p&gt;这对我来说是一件非常困难，也非常需要勇气的事情。还没开始做之前，我已经预想到真诚的自我袒露可能带来的种种风险。也许会看到熟人的沉默或冷淡的回应，也可能会被误解，把脆弱当成软弱，或者从我的文字缝隙中寻找攻击点。或许这些内容本该留给深夜，或留给知己，甚至没人真正关心你在想什么。但我知道，真诚既是一把刀子，也是一枚钥匙。我把这些文字写出来，也许会发出，也许不会——但这是自我叙述中最重要的一步：**先写下来。**那写出来，对我到底有什么好处呢？&lt;/p&gt;</description>
     </item>
     <item>
+      <title>试着让生活暂停一下</title>
+      <link>https://bytewalking.github.io/post/2025-05-05-life-on-hold/</link>
+      <pubDate>Mon, 05 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/post/2025-05-05-life-on-hold/</guid>
+      <description>&lt;h3 id=&#34;城市的一双眼睛&#34;&gt;&lt;strong&gt;城市的一双眼睛&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;假期的第一站，是去找凯辉借相机。他现在在一家叫 Recreate Games 的游戏公司工作，公司成名作是《猛兽派对》，他们的游戏发售爆火后就搬了办公地点。办公室位于五角场附近的高层写字楼，透过落地窗能看到浦东三件套与东方明珠构成的上海天际线，仿佛城市在努力告诉你它的宏大和忙碌。凯辉说每个站到窗边的人都会忍不住拍一张，我也不例外的掏出了手机。仔细观察他的工位，比我稍微“丰富”一些，一张富士山的缩放照片被放在一个袖珍相框内，还有一张他与富士山的合影照摆在另一侧。还有一些他们公司周边立牌之类的装饰随意摆放着。能从办公室看到城市天际线，是否就意味着已经成功了。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>摸鱼日志第一篇</title>
       <link>https://bytewalking.github.io/post/2025-04-23-first-day-of-slacking-off/</link>
       <pubDate>Wed, 23 Apr 2025 00:00:00 +0000</pubDate>
       <guid>https://bytewalking.github.io/post/2025-04-23-first-day-of-slacking-off/</guid>
-      <description>&lt;p&gt;夜色正浓，心绪也轻轻飘了起来。最近项目终于上线，我得以短暂喘息，摸鱼的时间悄悄多了起来。&lt;/p&gt;&#xA;&lt;p&gt;年前有位同事提议，让我帮他做一个量化交易的小工具。借助AI的力量，我们很快搭建起了一个简易的量化交易与回测系统。&lt;/p&gt;</description>
+      <description>&lt;p&gt;Slacking Log #1&lt;/p&gt;&#xA;&lt;p&gt;夜色正浓，心绪也轻轻飘了起来。最近项目终于上线，我终于能短暂喘息，摸鱼的时间悄悄多了起来。年前，一位同事提议让我帮他做一个量化交易的小工具。借助AI的力量，我们很快搭建起了一个简易的量化交易与回测系统。虽然这个项目与我的本职工作毫无关系，但我并不觉得自己在偷懒。相反，它像是在流水线的间隙中挣脱出来，为自己开辟了一片自由呼吸、自由探索的空间。&lt;/p&gt;</description>
     </item>
     <item>
       <title>macOs Big Sur 根目录修改文件方法</title>
