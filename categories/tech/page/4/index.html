@@ -109,10 +109,6 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/note/">note</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/tech/">tech</a>
                         </li>
                         
@@ -202,60 +198,6 @@
 <div data-pagefind-ignore="all">
 
 <div class="post-preview">
-    <a href="https://bytewalking.github.io/2018/05/23/external_system_auth/">
-        <h2 class="post-title">
-            微服务安全沉思录之三
-        </h2>
-	
-        <h3 class="post-subtitle">
-            外部系统访问控制
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            一些外部的第三方系统可能需要访问系统内部的微服务。例如在网上商店的例子中，外部的推荐服务可能需要接入系统，以获取商店的商品目录信息。相对于内部服务之间的访问而言，外部系统的访问需要进行严格的安全控制。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://bytewalking.github.io/2018/05/23/service_2_service_auth/">
-        <h2 class="post-title">
-            微服务安全沉思录之二
-        </h2>
-	
-        <h3 class="post-subtitle">
-            服务间认证与鉴权
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            除来自用户的访问请求以外，微服务应用中的各个微服务相互之间还有大量的访问,根据应用系统数据敏感程度不同，对于系统内微服务的访问也需要进行相应的安全控制。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
     <a href="https://bytewalking.github.io/2018/05/22/user_authentication_authorization/">
         <h2 class="post-title">
             微服务安全沉思录之一
@@ -273,7 +215,7 @@
     </a>
     <p class="post-meta">
     
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
+        Posted by Evan on Wednesday, May 23, 2018
         
         
     
@@ -300,7 +242,7 @@
     </a>
     <p class="post-meta">
     
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
+        Posted by Evan on Wednesday, May 23, 2018
         
         
     
@@ -310,24 +252,74 @@
 <hr>
 
 <div class="post-preview">
-    <a href="https://bytewalking.github.io/2018/04/16/using-helm-to-deploy-to-kubernetes/">
+    <a href="https://bytewalking.github.io/2018/03/29/what-is-service-mesh-and-istio/">
         <h2 class="post-title">
-            Helm介绍
+            谈谈微服务架构中的基础设施：Service Mesh与Istio
         </h2>
 	
         <h3 class="post-subtitle">
-            强大的Kubernetes包管理工具
+            Service Mesh模式及Istio开源项目介绍
         </h3>
 	
         <div class="post-content-preview">
 	
-            Helm是Kubernetes生态系统中的一个软件包管理工具。本文将介绍为何要使用Helm进行Kubernetes软件包管理，澄清Helm中使用到的相关概念，并通过一个具体的示例学习如何使用Helm打包，分发，安装，升级及回退Kubernetes应用。
+            作为一种架构模式，微服务将复杂系统切分为数十乃至上百个小服务，每个服务负责实现一个独立的业务逻辑。这些小服务易于被小型的软件工程师团队所理解和修改，并带来了语言和框架选择灵活性，缩短应用开发上线时间，可根据不同的工作负载和资源要求对服务进行独立缩扩容等优势。另一方面，当应用被拆分为多个微服务进程后，进程内的方法调用变成了了进程间的远程调用。引入了对大量服务的连接、管理和监控的复杂性,本文介绍了Service Mesh模式如何应对微服务架构的这些挑战，以及Service Mesh的明星开源项目Istio。
         
         </div>
     </a>
     <p class="post-meta">
     
-        Posted by EvanZhao on Monday, April 16, 2018
+        Posted by Evan on Thursday, March 29, 2018
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://bytewalking.github.io/2018/05/22/user_authentication_authorization/">
+        <h2 class="post-title">
+            如何构建安全的微服务应用？
+        </h2>
+	
+        <h3 class="post-subtitle">
+            微服务架构下的认证和鉴权方案探讨
+        </h3>
+	
+        <div class="post-content-preview">
+	
+            微服务架构的引入为软件应用带来了诸多好处：包括小开发团队，缩短开发周期，语言选择灵活性，增强服务伸缩能力等。与此同时，也引入了分布式系统的诸多复杂问题。其中一个挑战就是如何在微服务架构中实现一个灵活，安全，高效的认证和鉴权方案。本文将尝试就此问题进行一次比较完整的探讨。
+        
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by Evan on Saturday, February 3, 2018
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://bytewalking.github.io/2017/11/28/access-application-from-outside/">
+        <h2 class="post-title">
+            如何从外部访问Kubernetes集群中的应用？
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            我们知道，kubernetes的Cluster Network属于私有网络，只能在cluster Network内部才能访问部署的应用，那如何才能将Kubernetes集群中的应用暴露到外部网络，为外部用户提供服务呢？本文探讨了从外部网络访问kubernetes cluster中应用的几种实现方式。
+        
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by Evan on Tuesday, November 28, 2017
         
         
     
@@ -347,10 +339,6 @@
         <a href="/categories/tech/page/3/">&larr; Newer Posts</a>
     </li>
     
-    
-    <li class="next">
-        <a href="/categories/tech/page/5/">Older Posts &rarr;</a>
-    </li>
     
 </ul>
 
@@ -446,10 +434,6 @@
                
             
                
-            
-               
-            
-               
                     <a href="/tags/blog" title="blog">
                         blog
                     </a>
@@ -476,8 +460,6 @@
                
             
                
-            
-               
                     <a href="/tags/hoopchina" title="hoopchina">
                         hoopchina
                     </a>
@@ -495,8 +477,6 @@
                     <a href="/tags/java" title="java">
                         java
                     </a>
-               
-            
                
             
                
@@ -528,8 +508,6 @@
                
             
                
-            
-               
                     <a href="/tags/python" title="python">
                         python
                     </a>
@@ -543,10 +521,6 @@
                     </a>
                
             
-               
-                    <a href="/tags/service-mesh" title="service mesh">
-                        service mesh
-                    </a>
                
             
                
@@ -608,6 +582,8 @@
         <h5>LAST POSTS</h5>
         <ul>
         
+            <li><a href="/post/2025-05-10-self-exposure-social-experiment/">一次自我暴露的社会实验</a></li>
+        
             <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
         
             <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
@@ -615,8 +591,6 @@
             <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
         
             <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
-        
-            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
         
         </ul>
     </section>

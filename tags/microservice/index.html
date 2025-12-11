@@ -109,10 +109,6 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/note/">note</a>
-                        </li>
-                        
-                        <li>
                             <a href="/categories/tech/">tech</a>
                         </li>
                         
@@ -219,7 +215,7 @@
     </a>
     <p class="post-meta">
     
-        Posted by      &#34;EvanZhao&#34; on Wednesday, July 10, 2019
+        Posted by Evan on Wednesday, July 10, 2019
         
         
     
@@ -246,7 +242,7 @@
     </a>
     <p class="post-meta">
     
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
+        Posted by Evan on Wednesday, May 23, 2018
         
         
     
@@ -273,7 +269,7 @@
     </a>
     <p class="post-meta">
     
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
+        Posted by Evan on Wednesday, May 23, 2018
         
         
     
@@ -300,7 +296,7 @@
     </a>
     <p class="post-meta">
     
-        Posted by     &#34;EvanZhao&#34; on Wednesday, May 23, 2018
+        Posted by Evan on Wednesday, May 23, 2018
         
         
     
@@ -310,20 +306,24 @@
 <hr>
 
 <div class="post-preview">
-    <a href="https://bytewalking.github.io/2018/04/11/service-mesh-vs-api-gateway/">
+    <a href="https://bytewalking.github.io/2018/03/29/what-is-service-mesh-and-istio/">
         <h2 class="post-title">
-            Service Mesh 和 API Gateway的关系探讨（译文）
+            谈谈微服务架构中的基础设施：Service Mesh与Istio
         </h2>
+	
+        <h3 class="post-subtitle">
+            Service Mesh模式及Istio开源项目介绍
+        </h3>
 	
         <div class="post-content-preview">
 	
-            API Gateway和Service Mesh的关系是我最近一直在思考的问题，也和同事及社区的朋友之间进行了一些讨论。这篇短文很清晰地总结了两者之间的相似之处以及这两者在微服务架构中的不同用途。
+            作为一种架构模式，微服务将复杂系统切分为数十乃至上百个小服务，每个服务负责实现一个独立的业务逻辑。这些小服务易于被小型的软件工程师团队所理解和修改，并带来了语言和框架选择灵活性，缩短应用开发上线时间，可根据不同的工作负载和资源要求对服务进行独立缩扩容等优势。另一方面，当应用被拆分为多个微服务进程后，进程内的方法调用变成了了进程间的远程调用。引入了对大量服务的连接、管理和监控的复杂性,本文介绍了Service Mesh模式如何应对微服务架构的这些挑战，以及Service Mesh的明星开源项目Istio。
         
         </div>
     </a>
     <p class="post-meta">
     
-        Posted by EvanZhao on Wednesday, April 11, 2018
+        Posted by Evan on Thursday, March 29, 2018
         
         
     
@@ -438,10 +438,6 @@
                
             
                
-            
-               
-            
-               
                     <a href="/tags/blog" title="blog">
                         blog
                     </a>
@@ -468,8 +464,6 @@
                
             
                
-            
-               
                     <a href="/tags/hoopchina" title="hoopchina">
                         hoopchina
                     </a>
@@ -487,8 +481,6 @@
                     <a href="/tags/java" title="java">
                         java
                     </a>
-               
-            
                
             
                
@@ -520,8 +512,6 @@
                
             
                
-            
-               
                     <a href="/tags/python" title="python">
                         python
                     </a>
@@ -535,10 +525,6 @@
                     </a>
                
             
-               
-                    <a href="/tags/service-mesh" title="service mesh">
-                        service mesh
-                    </a>
                
             
                
@@ -600,6 +586,8 @@
         <h5>LAST POSTS</h5>
         <ul>
         
+            <li><a href="/post/2025-05-10-self-exposure-social-experiment/">一次自我暴露的社会实验</a></li>
+        
             <li><a href="/post/2021-01-03-mac-big-sur-root-modification/">macOs Big Sur 根目录修改文件方法</a></li>
         
             <li><a href="/post/2020-02-06-docker-and-model-deployment/">基于Docker容器的算法模型部署</a></li>
@@ -607,8 +595,6 @@
             <li><a href="/post/2020-01-16-high-concurrency-system-design/">浅谈如何设计一个高并发系统</a></li>
         
             <li><a href="/post/2019-12-29-2019-summarize/">2019年度总结</a></li>
-        
-            <li><a href="/post/2019-11-27-hello-hoopchina-hero/">心中的小小英雄</a></li>
         
         </ul>
     </section>

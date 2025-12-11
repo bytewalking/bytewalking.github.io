@@ -6,8 +6,15 @@
     <description>Recent content in Categories on Evan Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 May 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bytewalking.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Life</title>
+      <link>https://bytewalking.github.io/categories/life/</link>
+      <pubDate>Sat, 10 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bytewalking.github.io/categories/life/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Tech</title>
       <link>https://bytewalking.github.io/categories/tech/</link>
@@ -16,24 +23,10 @@
       <description></description>
     </item>
     <item>
-      <title>Life</title>
-      <link>https://bytewalking.github.io/categories/life/</link>
-      <pubDate>Sun, 29 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://bytewalking.github.io/categories/life/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Tips</title>
       <link>https://bytewalking.github.io/categories/tips/</link>
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
       <guid>https://bytewalking.github.io/categories/tips/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Note</title>
-      <link>https://bytewalking.github.io/categories/note/</link>
-      <pubDate>Mon, 21 May 2018 11:00:00 +0000</pubDate>
-      <guid>https://bytewalking.github.io/categories/note/</guid>
       <description></description>
     </item>
   </channel>
