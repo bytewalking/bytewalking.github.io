@@ -26,7 +26,7 @@
     <meta property="twitter:description" content="Evan，程序员, 开源爱好者，生活探险家 | 这里是 Evan 的博客，与你一起发现更大的世界。" />
     
 
-    <meta property="og:url" content="https://bytewalking.github.io/search/" />
+    <meta property="og:url" content="https://bytewalking.github.io/tags/think/" />
 
     
     <meta property="twitter:card" content="summary" />
@@ -36,9 +36,9 @@
     <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Searches | Evan 的博客 | Evan Blog</title>
+    <title>Think | Evan 的博客 | Evan Blog</title>
 
-    <link rel="canonical" href="/search/">
+    <link rel="canonical" href="/tags/think/">
 
     
 
@@ -182,7 +182,8 @@
 
 
 
-<div class="container">
+  
+<div data-pagefind-ignore="all" class="container">
     <div class="row">
         
         
@@ -193,117 +194,51 @@
             col-xs-12
             post-container
         ">
-        
             
-<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<div data-pagefind-ignore="all">
 
-<div id="search-searchbar"></div>
- <div class="post-list" id="search-hits">
- </div>
-
-<script>
-const search = instantsearch({
-  appId: '',
-  indexName: '',
-  apiKey: ''
-});
-
-const hitTemplate = function(hit) {
-
-
-  let date = '';
-  if (hit.date) {
-    date = moment.unix(hit.date).format('MMM D, YYYY');
-  }
-  let url = `${hit.url}#${hit.anchor}`;
-  const title = hit._highlightResult.title.value;
-
-  let breadcrumbs = '';
-  if (hit._highlightResult.headings) {
-    breadcrumbs = hit._highlightResult.headings.map(match => {
-      return `<span class="post-breadcrumb">${match.value}</span>`
-    }).join(' > ')
-  }
-
-  let content = "" ; 
-  if (hit._highlightResult.content){
-      content = hit._highlightResult.content.value;
-  }
-  else{
-      content = hit.summary;
-  }
-
-
-  return `
-    <div class="post-item">
-      <span class="post-meta">${date}</span>
-      <h2><a class="post-link" href="${url}">${title}</a></h2>
-      <a href="${url}" class="post-breadcrumbs">${breadcrumbs}</a>
-      <div class="post-snippet">${content}</div>
-    </div>
-  `;
-}
-
-
-search.addWidget(
-  instantsearch.widgets.searchBox({
-    container: '#search-searchbar',
-    placeholder: 'Search into posts...',
-    poweredBy: true 
-  })
-);
-
-search.addWidget(
-  instantsearch.widgets.hits({
-    container: '#search-hits',
-    templates: {
-      item: hitTemplate
-    }
-  })
-);
-
-search.start();
-</script>
-
-<style>
-.ais-search-box {
-  max-width: 100%;
-  margin-bottom: 15px;
-}
-.post-item {
-  margin-bottom: 30px;
-}
-.post-link .ais-Highlight {
-  color: #111;
-  font-style: normal;
-  text-decoration: underline;
-}
-.post-breadcrumbs {
-  color: #424242;
-  display: block;
-}
-.post-breadcrumb {
-  font-size: 18px;
-  color: #424242;
-}
-.post-breadcrumb .ais-Highlight {
-  font-weight: bold;
-  font-style: normal;
-}
-.post-snippet .ais-Highlight {
-  color: #2a7ae2;
-  font-style: normal;
-  font-weight: bold;
-}
-.post-snippet img {
-  display: none;
-}
-</style>
-
+<div class="post-preview">
+    <a href="https://bytewalking.github.io/post/2019-11-27-hello-hoopchina-hero/">
+        <h2 class="post-title">
+            心中的小小英雄
+        </h2>
+	
+        <h3 class="post-subtitle">
+            在hoopchina呆了半年，认识了好多人，见证了很多事，发觉自己越来越喜欢这里
+        </h3>
+	
+        <div class="post-content-preview">
+	
+            相信每个人心里都住着一个小小英雄。很多时候,TA会被工作,学习和社交的压力包裹住,不易辨别。但每当这个小小英雄显露出来,TA总是渴望竞争胜利,勇于承担责任,愿意照顾身旁的弱者。
         
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by Evan on Wednesday, November 27, 2019
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+</div>
+
+            
+
+
+<ul class="pager" data-pagefind-ignore="all">
+    
+    <li class="previous">
+        <a href="/tags/think/">&larr; Newer Posts</a>
+    </li>
+    
+    
+</ul>
+
+
        	</div>
         
 
@@ -563,6 +498,8 @@ search.start();
 
 
 
+
+
 <footer>
     <div class="container">
         <div class="row">
@@ -618,7 +555,7 @@ search.start();
             
            
                    <li>
-                       <a href='/search/index.xml' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                       <a href='/tags/think/index.xml' rel="alternate" type="application/rss+xml" title="Evan Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
