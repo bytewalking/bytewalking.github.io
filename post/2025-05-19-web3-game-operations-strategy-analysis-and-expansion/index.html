@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Evan Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://bytewalking.github.io//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Web3 游戏运营策略解析与扩展" />
+    <meta property="og:title" content="Web3 游戏运营策略解析与扩展" />
+    <meta property="twitter:title" content="Web3 游戏运营策略解析与扩展" />
+    
+
+    
+    <meta name="description" content="在 Web3 游戏中，经济系统不是附属模块，而是玩家动机、产品节奏与公司收入的交汇点。 本文从“玩家为什么要玩”“项目如何赚钱”这两个根问题出发，拆解 Web3 游戏在启动期、成熟期与后期运营中的核心策略，系统性分析代币、NFT、数值体系与市场机制如何共同塑造一款可持续运转的链上游戏经济。">
+    <meta property="og:description" content="在 Web3 游戏中，经济系统不是附属模块，而是玩家动机、产品节奏与公司收入的交汇点。 本文从“玩家为什么要玩”“项目如何赚钱”这两个根问题出发，拆解 Web3 游戏在启动期、成熟期与后期运营中的核心策略，系统性分析代币、NFT、数值体系与市场机制如何共同塑造一款可持续运转的链上游戏经济。" />
+    <meta property="twitter:description" content="在 Web3 游戏中，经济系统不是附属模块，而是玩家动机、产品节奏与公司收入的交汇点。 本文从“玩家为什么要玩”“项目如何赚钱”这两个根问题出发，拆解 Web3 游戏在启动期、成熟期与后期运营中的核心策略，系统性分析代币、NFT、数值体系与市场机制如何共同塑造一款可持续运转的链上游戏经济。" />
+    
+
+    <meta property="og:url" content="https://bytewalking.github.io/post/2025-05-19-web3-game-operations-strategy-analysis-and-expansion/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Evan, Evan 的网络日志, Evan 的博客, Evan Blog, 博客, 个人网站, 互联网, Web3">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Web3 游戏运营策略解析与扩展 | Evan 的博客 | Evan Blog</title>
+
+    <link rel="canonical" href="/post/2025-05-19-web3-game-operations-strategy-analysis-and-expansion/">
+
+    
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evan Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tips/">tips</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes//">NOTES</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Evan Blog </h1>
+                    
+		    <span class="subheading">The journey is the reward</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <h1 id="web3-游戏运营策略解析与扩展">Web3 游戏运营策略解析与扩展</h1>
+<h2 id="核心问题">核心问题</h2>
+<ul>
+<li><strong>玩家为什么要玩这款游戏？</strong>
+<ul>
+<li>为“乐趣”付费：理想玩家画像，忠诚度高，生命周期长。</li>
+<li>为“投机”参与：经济玩家，不一定真正体验游戏，关注资产增值。</li>
+</ul>
+</li>
+<li><strong>公司怎么通过游戏赚钱？</strong>
+<ul>
+<li>传统手段：商店直购、抽卡/转蛋、税收机制等。</li>
+<li>Web3特有：代币发行与流通、NFT销售、二级市场交易抽成。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="启动阶段策略">启动阶段策略</h2>
+<h3 id="币的稀缺与价格锚定">币的稀缺与价格锚定</h3>
+<ul>
+<li>初期必须<strong>人为制造币的稀缺性</strong>，建立供需张力。
+<ul>
+<li>只释放一部分代币，引导用户通过游戏行为或购买行为获取。</li>
+<li>使用“币本位”机制：币作为核心交换媒介，围绕它建立玩法（如抽卡包、角色购买）。</li>
+</ul>
+</li>
+<li>引入门槛机制
+<ul>
+<li>投机客需通过<strong>支付行为</strong>进入（如质押、抽奖、购买NFT）而非白嫖。</li>
+<li>激励游戏内行为（比如任务挖矿、成就系统），让用户通过“玩”而非“抛”来获取收益。</li>
+</ul>
+</li>
+</ul>
+<h3 id="金本位-vs-币本位概念澄清">金本位 vs 币本位（概念澄清）</h3>
+<ul>
+<li><strong>金本位</strong>：币购买的商品价值不断提升。例如：100币以前只能买普通卡，现在能买SSR，增强玩家预期。</li>
+<li><strong>币本位</strong>：币价上升带来资产升值，游戏中道具或资产的定价保持不变，但价值跟随币价浮动。</li>
+</ul>
+<hr>
+<h2 id="成熟期与后期运营策略">成熟期与后期运营策略</h2>
+<h3 id="赛季与数值系统">赛季与数值系统</h3>
+<ul>
+<li><strong>数值贬值模式</strong>：旧赛季数值作废，新赛季重启——保持公平但伤害投资价值。</li>
+<li><strong>数值累计模式</strong>：旧赛季数值可在新赛季延续——增强玩家资产沉淀价值，但易造成“数值通胀”。</li>
+</ul>
+<h3 id="币的释放机制">币的释放机制</h3>
+<ul>
+<li>高端玩家通过<strong>排行榜、赛事奖励</strong>释放代币。</li>
+<li>中低端玩家通过<strong>抽奖、卡包、成长激励</strong>进行代币消耗。</li>
+<li>代币释放一定要配合<strong>任务/玩法挂钩</strong>，避免变成“买币即得”。</li>
+</ul>
+<hr>
+<h2 id="市场机制设计">市场机制设计</h2>
+<h3 id="游戏内交易市场">游戏内交易市场</h3>
+<ul>
+<li>不只是资产交易所，还是“玩家流动性交换池”。</li>
+<li>沉淀资金未必是坏事，但需设定流通出口（如消耗机制、升级、入场门票等）。</li>
+<li>玩家通过交易行为感知“乐趣”和“价值”，是打通经济系统与玩法的核心桥梁。</li>
+</ul>
+<h3 id="代币入场与退出机制">代币入场与退出机制</h3>
+<ul>
+<li><strong>入场机制</strong>：通过任务/战斗奖励、代币销售等方式与用户增长绑定。</li>
+<li><strong>退出机制</strong>：
+<ul>
+<li>官方回收机制（税费、消耗、销毁）</li>
+<li>二级市场售出（玩家套现）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="钱包与链的考虑">钱包与链的考虑</h2>
+<h3 id="钱包类型">钱包类型</h3>
+<ul>
+<li><strong>UA 钱包（Unified Account）</strong>：适合新手用户，抽象化链与币，提升体验。</li>
+<li><strong>A 钱包（Advanced Wallet）</strong>：支持自托管与链上资产操作，适合重度用户。</li>
+</ul>
+<h3 id="链的选择">链的选择</h3>
+<ul>
+<li>影响用户成本、TPS、开发体验与社区。</li>
+<li>常见选择：
+<ul>
+<li><strong>以太坊</strong>：基础盘稳固但Gas高</li>
+<li><strong>Polygon</strong>：低成本、兼容性强</li>
+<li><strong>BSC</strong>：用户多、流动性好</li>
+<li><strong>Solana/Aptos/Sui</strong>：高性能新链，适合GameFi爆发</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="运营暗线gs托号节奏控制">运营“暗线”：GS、托号、节奏控制</h2>
+<ul>
+<li><strong>GS运营号（Game Support Accounts）</strong>
+<ul>
+<li>官方伪玩家，用于引导市场行为、控制节奏、防范流动性失控。</li>
+</ul>
+</li>
+<li><strong>节奏控制</strong>
+<ul>
+<li>控制NFT、代币投放节奏，避免“空投即抛售”。</li>
+<li>通过内容更新、联动、奖励活动制造波峰。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="理想状态">理想状态</h2>
+<blockquote>
+<p>“为乐趣买单，而非为投机而来。”</p>
+</blockquote>
+<ul>
+<li>真正的理想状态，是玩家因内容而留下，因经济系统而投资。</li>
+<li>投机只是早期杠杆，最终要靠产品沉淀下来的“社群感”、“成长路径”、“身份认同”。</li>
+</ul>
+
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/zhao_evan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Programming Enthusiast, Game Player and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:phzhao7548@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="/img/WechatIMG52.png">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/bytewalking">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/blog" title="blog">
+                        blog
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+               
+            
+               
+                    <a href="/tags/github" title="github">
+                        github
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/hoopchina" title="hoopchina">
+                        hoopchina
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/istio" title="istio">
+                        istio
+                    </a>
+               
+            
+               
+                    <a href="/tags/java" title="java">
+                        java
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/kubernetes" title="kubernetes">
+                        kubernetes
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/mac" title="mac">
+                        mac
+                    </a>
+               
+            
+               
+                    <a href="/tags/microservice" title="microservice">
+                        microservice
+                    </a>
+               
+            
+               
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+               
+            
+               
+                    <a href="/tags/python" title="python">
+                        python
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/security" title="security">
+                        security
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/think" title="think">
+                        think
+                    </a>
+               
+            
+               
+                    <a href="/tags/think-deeply" title="think-deeply">
+                        think-deeply
+                    </a>
+               
+            
+               
+                    <a href="/tags/tips" title="tips">
+                        tips
+                    </a>
+               
+            
+               
+            
+               
+                    <a href="/tags/vim" title="vim">
+                        vim
+                    </a>
+               
+            
+               
+            
+               
+            
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+            
+            <li><a target="_blank" href="https://blog.lyygroup.com">Alex&#39;s Blog</a></li>
+            
+            <li><a target="_blank" href="https://00kai0.github.io/">Kerwin Sun&#39;s Blog</a></li>
+            
+        </ul>
+    </section>
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>LAST POSTS</h5>
+        <ul>
+        
+            <li><a href="/post/2025-06-08-a-perilous-game/">危险的游戏</a></li>
+        
+            <li><a href="/post/2025-05-18-the-lessons-of-life/">人生课题</a></li>
+        
+            <li><a href="/post/2025-05-12-out-of-the-labels-we-emerge/">从标签中走出的我们</a></li>
+        
+            <li><a href="/post/2025-05-12-mind-map/">思维地图</a></li>
+        
+            <li><a href="/post/2025-05-10-self-exposure-social-experiment/">一次自我暴露的社会实验</a></li>
+        
+        </ul>
+    </section>
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:phzhao7548@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    <li>
+                        <a target="_blank" href="/img/WechatIMG52.png">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-weixin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/bytewalking">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Evan Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Evan Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
